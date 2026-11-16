@@ -12,11 +12,11 @@ import pytest
 from sqlalchemy import select
 from test_weather import FIRST_DAY, GEO, WEATHER, fake_response
 
-from app import JsonFormatter
 from app.extensions import db
 from app.models import QuizAnswer, User
 from app.questions import STATIC_IT_PATH
 from app.quiz.draw_state import take_questions
+from app.security import JsonFormatter
 from app.weather.service import WeatherService, transform_days
 from tests.helpers import present
 
