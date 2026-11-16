@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+          content="Allenati con quiz su Python e intelligenza artificiale, leggi le spiegazioni e segui i tuoi progressi.">
+    <title>{% block title %}QuizLab — Impara. Gioca. Cresci.{% endblock %}</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/menu.js') }}" defer></script>
+    {% block scripts %}{% endblock %}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Vai al contenuto</a>
+    <div class="shell">
+      <header class="header">
+        <div class="container">
+          <nav class="nav" aria-label="Navigazione principale">
+            <a class="brand"
+               href="{{ url_for('main.home') }}"
+               aria-label="Pagina iniziale di QuizLab"><span class="brand-badge" aria-hidden="true">Q</span>QuizLab<span class="brand-dot">.</span></a>
+            <button class="mobile-toggle"
+                    type="button"
+                    aria-controls="nav-links"
+                    aria-expanded="false"
+                    aria-label="Apri o chiudi il menu">☰</button>
+            <div class="nav-links" id="nav-links">
+              <a href="{{ url_for('main.home') }}"
+                 {% if request.blueprint == 'main' %}aria-current="page"{% endif %}>Home</a>
+              {% if current_user.is_authenticated %}<a href="{{ url_for('quiz.index') }}"
+                                                       {% if request.blueprint == 'quiz' %}aria-current="page"{% endif %}>Gioca al quiz</a>{% endif %}
+              <a href="{{ url_for('leaderboard.index') }}"
+                 {% if request.blueprint == 'leaderboard' %}aria-current="page"{% endif %}>Classifica</a>
+            </div>
+            <div class="nav-right">
+              {% if current_user.is_authenticated %}
+                <span class="user-chip"><span class="small-avatar" aria-hidden="true">{{ current_user.nickname[0] }}</span><span>{{ current_user.nickname }}</span></span>
+                <form method="post" action="{{ url_for('auth.logout') }}">
+                  <input type="hidden"
+                         name="csrf_token"
+                         value="{{ csrf_token() }}"><button class="btn btn-outline"
+                                                            type="submit">Esci</button>
+                </form>
+              {% else %}
+                <a class="btn btn-ghost" href="{{ url_for('auth.login') }}">Accedi</a>
+                <a class="btn btn-primary" href="{{ url_for('auth.register') }}">Unisciti a QuizLab ↗</a>
+              {% endif %}
+            </div>
+          </nav>
+        </div>
+      </header>
+      <main id="main" class="main" tabindex="-1">
+        <div class="container" role="status">
+          {% for category, message in get_flashed_messages(with_categories=True) %}
+            <p class="notice {{ 'notice-error' if category == 'error' else '' }}">{{ message }}</p>
+          {% endfor %}
+        </div>
+        {% block content %}{% endblock %}
+      </main>
+      <footer class="footer">
+        <div class="container footer-inner"><strong>QuizLab<span aria-hidden="true">.</span> Impara. Gioca. Cresci.</strong><span>Sviluppato da Andrea Ragalzi · Python e AI</span></div>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Classifica — QuizLab{% endblock %}
+{% block content %}
+  <div class="container">
+    <section class="leaderboard-hero">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> LA CLASSIFICA GLOBALE</div>
+        <h1>Classifica</h1>
+        <p>I giocatori sono ordinati per punti complessivi.</p>
+      </div>
+      <div class="trophy" aria-hidden="true">🏆</div>
+    </section>
+    {% if players.page == 1 and players.items %}
+      <section class="podium" aria-label="I primi tre giocatori">
+        {% for player in players.items[:3] %}
+          <article class="podium-card {{ 'first' if loop.first else '' }}">
+            <span class="rank-medal">#{{ loop.index }}</span>
+            <div class="podium-avatar" aria-hidden="true">{{ player.nickname[0] }}</div>
+            <h2>{{ player.nickname }}</h2>
+            <strong>{{ player.total_score }}</strong> punti
+          </article>
+        {% endfor %}
+      </section>
+    {% endif %}
+    <section class="leaderboard-box" aria-labelledby="ranking-title">
+      <div class="table-bar">
+        <h2 id="ranking-title">Classifica dei giocatori</h2>
+        <span>Punti complessivi · {{ players.total }} giocatori</span>
+      </div>
+      <div class="table-scroll">
+        <table class="rank-table">
+          <caption class="visually-hidden">Giocatori ordinati per punti totali; a parità di punti, per nickname.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Posizione</th>
+              <th scope="col">Giocatore</th>
+              <th scope="col">Punti totali</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for player in players.items %}
+              <tr{% if current_user.is_authenticated and player.id == current_user.id %} class="current-row"{% endif %}>
+                <td>#{{ (players.page - 1) * players.per_page + loop.index }}</td>
+                <th scope="row"><span class="person"><span class="small-avatar" aria-hidden="true">{{ player.nickname[0] }}</span>{{ player.nickname }}{% if current_user.is_authenticated and player.id == current_user.id %} (tu){% endif %}</span></th>
+                <td>{{ player.total_score }}</td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="3">Non ci sono ancora giocatori in classifica.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <nav class="pagination" aria-label="Pagine della classifica">
+      {% if players.has_prev %}<a class="btn btn-outline"
+                                  href="{{ url_for('leaderboard.index', page=players.prev_num) }}">← Precedente</a>{% endif %}
+      {% if players.has_next %}<a class="btn btn-outline"
+                                  href="{{ url_for('leaderboard.index', page=players.next_num) }}">Successiva →</a>{% endif %}
+    </nav>
+  </div>
+{% endblock %}

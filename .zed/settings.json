@@ -1,0 +1,24 @@
+// Project settings for Zed. Keeps editor diagnostics aligned with `scripts/check.sh`.
+{
+  "languages": {
+    "Python": {
+      // Use Pyright (as on the command line) plus Ruff; the type-checker
+      // settings, interpreter (.venv) and Python version come from
+      // [tool.pyright] in pyproject.toml.
+      "language_servers": ["pyright", "ruff", "!basedpyright", "!pylsp", "!ty", "!pyrefly"],
+      "formatter": { "language_server": { "name": "ruff" } }
+    },
+    "HTML": {
+      // Jinja templates: a generic HTML formatter (Prettier) would corrupt
+      // template tags, so format with djLint from the project virtualenv.
+      "formatter": {
+        "external": {
+          "command": ".venv/bin/djlint",
+          "arguments": ["-", "--reformat", "--configuration", "pyproject.toml"]
+        }
+      }
+    },
+    "CSS": { "formatter": "prettier" },
+    "JavaScript": { "formatter": "prettier" }
+  }
+}

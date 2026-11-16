@@ -1,0 +1,88 @@
+[project]
+name = "quizlab"
+version = "1.0.0"
+description = "An educational Python and AI quiz application"
+requires-python = ">=3.11"
+dependencies = ["Flask==3.1.3", "Flask-SQLAlchemy==3.1.1", "Flask-Login==0.6.3", "Flask-WTF==1.2.2", "requests==2.32.5"]
+
+[project.optional-dependencies]
+# Development-only tooling; production installs use requirements.txt.
+dev = [
+    "pytest==8.4.2",
+    "ruff==0.15.11",
+    "pyright[nodejs]==1.1.414",
+    "djlint==1.50.4",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+extend-exclude = ["node_modules", "instance"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # Pyflakes
+    "I",    # import sorting
+    "N",    # PEP 8 naming
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "C4",   # comprehensions
+    "SIM",  # simplifications
+    "PIE",  # misc. lints
+    "RUF",  # Ruff-specific rules
+]
+
+[tool.pyright]
+# Keep in sync with requires-python; the local virtual environment may be newer.
+pythonVersion = "3.11"
+venvPath = "."
+venv = ".venv"
+include = ["app", "tests", "wsgi.py"]
+exclude = [
+    "**/__pycache__",
+    "**/node_modules",
+    ".venv",
+    "instance",
+    "build",
+    "dist",
+    "*.egg-info",
+    ".pytest_cache",
+    ".ruff_cache",
+]
+typeCheckingMode = "standard"
+# Stricter rules that add value without boilerplate.
+reportMissingTypeArgument = "error"
+reportUnnecessaryCast = "error"
+reportUnnecessaryTypeIgnoreComment = "error"
+reportDeprecated = "error"
+reportMissingParameterType = "error"
+
+[[tool.pyright.executionEnvironments]]
+# Pytest fixtures are injected by name; annotating every fixture parameter in
+# test functions adds noise without improving checks on application code.
+root = "tests"
+extraPaths = ["."]  # mirrors pytest's pythonpath
+reportMissingParameterType = "none"
+
+[tool.djlint]
+profile = "jinja"
+indent = 2
+max_line_length = 120
+# Jinja blocks inside attribute values are formatted by hand to keep output stable.
+format_attribute_template_tags = false
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.setuptools.package-data]
+app = ["templates/*.html", "templates/auth/*.html", "templates/quiz/*.html", "static/css/*.css", "static/js/*.js"]

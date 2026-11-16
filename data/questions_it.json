@@ -1,0 +1,1802 @@
+[
+  {
+    "id": "PY-001",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Quale risultato stampa questa espressione?",
+    "description": "In Python la moltiplicazione viene eseguita prima dell’addizione.",
+    "code": "print(2 + 3 * 4)",
+    "options": [
+      "20",
+      "14",
+      "24",
+      "9"
+    ],
+    "correct_index": 1,
+    "explanation": "Prima si calcola 3 * 4 = 12, poi 2 + 12 = 14.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-002",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Quale elemento viene selezionato con indice -1?",
+    "description": "Gli indici negativi permettono di accedere agli elementi partendo dalla fine.",
+    "code": "numbers = [3, 6, 9]\nprint(numbers[-1])",
+    "options": [
+      "3",
+      "6",
+      "9",
+      "Errore di indice"
+    ],
+    "correct_index": 2,
+    "explanation": "L’indice -1 identifica l’ultimo elemento della lista, cioè 9.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-003",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Quale lista viene stampata con questo slicing?",
+    "description": "Lo slicing include l’indice iniziale ed esclude quello finale.",
+    "code": "numbers = [2, 4, 6, 8]\nprint(numbers[1:3])",
+    "options": [
+      "[4, 6]",
+      "[2, 4, 6]",
+      "[4, 6, 8]",
+      "[2, 4]"
+    ],
+    "correct_index": 0,
+    "explanation": "Gli indici 1 e 2 contengono 4 e 6; l’elemento all’indice 3 è escluso.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-004",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Quanto vale la lunghezza di questa stringa?",
+    "description": "La funzione len() conta anche gli spazi presenti nella stringa.",
+    "code": "print(len(\"ciao mondo\"))",
+    "options": [
+      "9",
+      "11",
+      "5",
+      "10"
+    ],
+    "correct_index": 3,
+    "explanation": "“ciao” contiene 4 caratteri, lo spazio 1 e “mondo” 5: in totale 10.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-005",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Quale lista viene stampata da range(1, 5)?",
+    "description": "Quando si usa range(start, stop), il limite finale non è incluso.",
+    "code": "print(list(range(1, 5)))",
+    "options": [
+      "[1, 2, 3, 4, 5]",
+      "[1, 2, 3, 4]",
+      "[0, 1, 2, 3, 4]",
+      "[2, 3, 4, 5]"
+    ],
+    "correct_index": 1,
+    "explanation": "range(1, 5) produce i numeri da 1 a 4, perché 5 è escluso.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-006",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Quale messaggio viene stampato dal programma?",
+    "description": "L’operatore % restituisce il resto della divisione.",
+    "code": "number = 7\nif number % 2 == 0:\n    print(\"pari\")\nelse:\n    print(\"dispari\")",
+    "options": [
+      "True",
+      "False",
+      "dispari",
+      "Nessun output"
+    ],
+    "correct_index": 2,
+    "explanation": "7 % 2 vale 1, quindi la condizione è falsa e viene eseguito else.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-007",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Che cosa indica il tipo bool in Python?",
+    "description": "Python distingue valori di verità da numeri e sequenze.",
+    "code": null,
+    "options": [
+      "Un valore True o False",
+      "Un numero decimale",
+      "Una sequenza di caratteri",
+      "Un elenco modificabile"
+    ],
+    "correct_index": 0,
+    "explanation": "bool rappresenta un valore logico: True oppure False.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-008",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Qual è il risultato dell’operatore and?",
+    "description": "Un’espressione con and è vera solo quando entrambi gli operandi sono veri.",
+    "code": "print(True and False)",
+    "options": [
+      "True",
+      "None",
+      "1",
+      "False"
+    ],
+    "correct_index": 3,
+    "explanation": "True and False restituisce False, perché uno dei due operandi è falso.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-009",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Quale valore restituisce get() quando la chiave manca?",
+    "description": "Il secondo argomento di get() specifica un valore predefinito.",
+    "code": "player = {\"name\": \"Ada\"}\nprint(player.get(\"points\", 0))",
+    "options": [
+      "KeyError",
+      "0",
+      "None",
+      "points"
+    ],
+    "correct_index": 1,
+    "explanation": "La chiave “points” non esiste; get() restituisce quindi il default 0.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-010",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Quale contenuto ha la lista dopo append()?",
+    "description": "append() aggiunge un elemento alla fine della lista esistente.",
+    "code": "items = [1, 2]\nitems.append(3)\nprint(items)",
+    "options": [
+      "[3, 1, 2]",
+      "[1, 2]",
+      "[1, 2, 3]",
+      "[1, 2, [3]]"
+    ],
+    "correct_index": 2,
+    "explanation": "append(3) modifica la lista aggiungendo 3 come ultimo elemento.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-011",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Quale valore viene restituito dalla funzione?",
+    "description": "Il parametro b ha un valore predefinito, usato quando non viene passato.",
+    "code": "def add(a, b=3):\n    return a + b\n\nprint(add(5))",
+    "options": [
+      "8",
+      "5",
+      "2",
+      "6"
+    ],
+    "correct_index": 0,
+    "explanation": "Alla chiamata add(5) il parametro b resta 3, quindi il risultato è 8.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-012",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Quale testo stampa questa f-string?",
+    "description": "Le espressioni fra parentesi graffe vengono valutate.",
+    "code": "name = \"Ada\"\nage = 12\nprint(f\"{name} ha {age} anni\")",
+    "options": [
+      "Ada ha age anni",
+      "Ada ha 12",
+      "name ha 12 anni",
+      "Ada ha 12 anni"
+    ],
+    "correct_index": 3,
+    "explanation": "L’f-string sostituisce {name} con Ada e {age} con 12.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-013",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "medio",
+    "title": "Quale lista produce la list comprehension?",
+    "description": "La condizione seleziona solo i numeri pari.",
+    "code": "print([x * x for x in range(1, 6) if x % 2 == 0])",
+    "options": [
+      "[1, 2, 3, 4, 5]",
+      "[4, 16]",
+      "[2, 4]",
+      "[1, 9, 25]"
+    ],
+    "correct_index": 1,
+    "explanation": "La comprehension seleziona 2 e 4 e ne calcola il quadrato: 4 e 16.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-014",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Quanti elementi contiene questo set?",
+    "description": "I set conservano elementi distinti, eliminando i duplicati.",
+    "code": "print(len(set([1, 2, 2, 3])))",
+    "options": [
+      "4",
+      "2",
+      "3",
+      "1"
+    ],
+    "correct_index": 2,
+    "explanation": "Il valore 2 compare due volte nella lista, ma una sola volta nel set.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-015",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "medio",
+    "title": "Che cosa succede provando a modificare una tupla?",
+    "description": "Le tuple sono sequenze immutabili.",
+    "code": "values = (1, 2, 3)\nvalues[0] = 9",
+    "options": [
+      "Viene sollevato TypeError",
+      "La tupla cambia valore",
+      "Il valore diventa None",
+      "La tupla viene convertita in lista"
+    ],
+    "correct_index": 0,
+    "explanation": "L’assegnazione a un elemento di una tupla non è consentita: viene sollevato TypeError.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-016",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "medio",
+    "title": "Quale testo viene stampato con try/except?",
+    "description": "Il blocco except intercetta l’errore specificato.",
+    "code": "try:\n    print(10 / 0)\nexcept ZeroDivisionError:\n    print(\"divisione non valida\")",
+    "options": [
+      "0",
+      "1",
+      "nessun output",
+      "divisione non valida"
+    ],
+    "correct_index": 3,
+    "explanation": "La divisione per zero solleva ZeroDivisionError, intercettato dal blocco except.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-017",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Come cambia questa stringa dopo strip()?",
+    "description": "Osserva che il valore originale contiene spazi prima e dopo la parola.",
+    "code": "print(\"  Python  \".strip())",
+    "options": [
+      "Vengono rimossi solo gli spazi finali",
+      "Vengono rimossi gli spazi iniziali e finali",
+      "Vengono rimossi solo gli spazi iniziali",
+      "Vengono rimossi tutti gli spazi interni alla parola"
+    ],
+    "correct_index": 1,
+    "explanation": "strip() rimuove gli spazi bianchi all’inizio e alla fine della stringa, lasciando invariato il contenuto centrale.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-018",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Da quale indice parte enumerate() per impostazione predefinita?",
+    "description": "enumerate() abbina ogni elemento della sequenza a un contatore.",
+    "code": "for index, value in enumerate([\"a\", \"b\"]):\n    print(index, value)",
+    "options": [
+      "1",
+      "-1",
+      "0",
+      "Dipende dalla lunghezza"
+    ],
+    "correct_index": 2,
+    "explanation": "Senza il parametro start, enumerate() comincia da 0.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-019",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "medio",
+    "title": "Qual è la differenza fra == e is?",
+    "description": "Due oggetti possono avere lo stesso valore pur essendo oggetti distinti.",
+    "code": null,
+    "options": [
+      "== confronta i valori; is confronta l’identità",
+      "== confronta l’identità; is confronta i valori",
+      "Entrambi confrontano sempre solo i valori",
+      "is verifica se due oggetti hanno lo stesso tipo"
+    ],
+    "correct_index": 0,
+    "explanation": "== verifica l’uguaglianza del valore; is controlla se si tratta dello stesso oggetto.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-020",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Quale risultato produce la divisione intera?",
+    "description": "L’operatore // esegue la divisione con arrotondamento verso il basso.",
+    "code": "print(7 // 2)",
+    "options": [
+      "3.5",
+      "4",
+      "2",
+      "3"
+    ],
+    "correct_index": 3,
+    "explanation": "7 // 2 restituisce 3, il risultato della divisione arrotondato verso il basso.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-021",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Che cosa restituisce bool([])?",
+    "description": "Una lista vuota è considerata falsa nei contesti booleani.",
+    "code": "print(bool([]))",
+    "options": [
+      "True",
+      "False",
+      "[]",
+      "None"
+    ],
+    "correct_index": 1,
+    "explanation": "Le raccolte vuote sono falsy; quindi bool([]) è False.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-022",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Quale lista stampa sorted()?",
+    "description": "sorted() restituisce una nuova lista ordinata e non modifica la lista di partenza.",
+    "code": "numbers = [3, 1, 2]\nprint(sorted(numbers))",
+    "options": [
+      "[3, 1, 2]",
+      "[3, 2, 1]",
+      "[1, 2, 3]",
+      "None"
+    ],
+    "correct_index": 2,
+    "explanation": "sorted(numbers) restituisce [1, 2, 3], lasciando invariato numbers.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-023",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "facile",
+    "title": "Su quali elementi agisce in quando viene applicato a un dizionario?",
+    "description": "L’operatore controlla l’appartenenza direttamente sul dizionario.",
+    "code": null,
+    "options": [
+      "Sulle chiavi",
+      "Solo sui valori",
+      "Sulle coppie (chiave, valore)",
+      "Sugli indici numerici delle posizioni"
+    ],
+    "correct_index": 0,
+    "explanation": "L’appartenenza in un dizionario, per impostazione predefinita, verifica le chiavi.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-024",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "medio",
+    "title": "Che cosa succede quando due variabili fanno riferimento alla stessa lista?",
+    "description": "L’assegnazione di una lista a un’altra variabile non crea automaticamente una copia.",
+    "code": "a = [1]\nb = a\nb.append(2)\nprint(a)",
+    "options": [
+      "Solo b contiene il nuovo elemento",
+      "a rimane invariata perché l’assegnazione crea una copia",
+      "append restituisce una nuova lista senza modificare a",
+      "Una modifica tramite una variabile è visibile anche dall’altra"
+    ],
+    "correct_index": 3,
+    "explanation": "a e b indicano la stessa lista; append(2) modifica quell’unico oggetto.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "PY-025",
+    "category": "python",
+    "category_label": "Fondamenti di Python",
+    "difficulty": "medio",
+    "title": "Quale sequenza produce questo slicing con passo negativo?",
+    "description": "Un passo negativo attraversa la stringa da destra verso sinistra.",
+    "code": "text = \"abc\"\nprint(text[::-1])",
+    "options": [
+      "abc",
+      "cba",
+      "bac",
+      "bca"
+    ],
+    "correct_index": 1,
+    "explanation": "text[::-1] restituisce tutti i caratteri in ordine inverso. print mostra cba senza virgolette.",
+    "source_url": "https://docs.python.org/3/tutorial/"
+  },
+  {
+    "id": "CV-001",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "facile",
+    "title": "Che cos’è un pixel in un’immagine digitale?",
+    "description": "Pensa a come viene rappresentata un’immagine come griglia di informazioni.",
+    "code": null,
+    "options": [
+      "Un insieme di pixel che forma un oggetto",
+      "Un canale di colore dell’intera immagine",
+      "Un elemento della griglia dell’immagine",
+      "La risoluzione complessiva dell’immagine"
+    ],
+    "correct_index": 2,
+    "explanation": "Un pixel è un elemento della griglia: i suoi valori rappresentano intensità o colori.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-002",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "facile",
+    "title": "Quali canali compongono normalmente un’immagine RGB?",
+    "description": "RGB è un modo comune di rappresentare i colori sui display.",
+    "code": null,
+    "options": [
+      "Rosso, verde e blu",
+      "Rosso, giallo e nero",
+      "Bianco, grigio e nero",
+      "Ciano, magenta e giallo"
+    ],
+    "correct_index": 0,
+    "explanation": "RGB significa Red, Green, Blue: rosso, verde e blu.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-003",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "facile",
+    "title": "In quale ordine OpenCV legge normalmente i canali di un’immagine a colori?",
+    "description": "Considera il comportamento standard di cv2.imread() senza conversioni.",
+    "code": null,
+    "options": [
+      "RGB",
+      "HSV",
+      "CMYK",
+      "BGR"
+    ],
+    "correct_index": 3,
+    "explanation": "Per impostazione predefinita, cv2.imread() usa BGR, ossia blu, verde e rosso.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-004",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "facile",
+    "title": "Che cosa rappresenta un’immagine in scala di grigi?",
+    "description": "Non è necessario mantenere tutti i canali colore per descrivere la luminosità.",
+    "code": null,
+    "options": [
+      "Solo i contorni degli oggetti",
+      "L’intensità luminosa dei pixel",
+      "Soltanto i pixel neri",
+      "Un’immagine con quattro canali"
+    ],
+    "correct_index": 1,
+    "explanation": "In scala di grigi ogni pixel rappresenta un’intensità, normalmente con un solo canale.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-005",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "facile",
+    "title": "A che cosa serve il ridimensionamento di un’immagine?",
+    "description": "Un programma può richiedere immagini di dimensioni specifiche.",
+    "code": null,
+    "options": [
+      "A modificare soltanto il numero di canali",
+      "A cambiare la profondità di colore dei pixel",
+      "A modificare larghezza e altezza in pixel",
+      "A ritagliare una regione senza riscalarla"
+    ],
+    "correct_index": 2,
+    "explanation": "Il ridimensionamento cambia le dimensioni spaziali dell’immagine, espresse in pixel.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-006",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "facile",
+    "title": "Che cosa fa un modello di classificazione delle immagini?",
+    "description": "Supponi di voler distinguere una fotografia di un gatto da una di un cane.",
+    "code": null,
+    "options": [
+      "Assegna una o più categorie all’immagine",
+      "Localizza ciascun oggetto con un riquadro",
+      "Assegna una classe a ciascun pixel",
+      "Restituisce una descrizione testuale della scena"
+    ],
+    "correct_index": 0,
+    "explanation": "La classificazione associa all’immagine categorie, per esempio gatto o cane.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-007",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "facile",
+    "title": "Qual è il risultato tipico del rilevamento di oggetti?",
+    "description": "Il modello deve dire sia che cosa è presente, sia dove si trova.",
+    "code": null,
+    "options": [
+      "Una sola categoria per l’intera immagine",
+      "Una maschera con una classe per ogni pixel",
+      "Le coordinate dei soli punti di interesse",
+      "Etichette e riquadri che localizzano gli oggetti"
+    ],
+    "correct_index": 3,
+    "explanation": "Il rilevamento di oggetti produce in genere categorie e bounding box per localizzarli.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-008",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "facile",
+    "title": "Che cosa distingue la segmentazione dalla classificazione globale?",
+    "description": "Per la segmentazione interessa individuare le regioni dell’immagine.",
+    "code": null,
+    "options": [
+      "Assegna una sola etichetta all’intera immagine",
+      "Assegna etichette a pixel o regioni",
+      "Restituisce soltanto riquadri attorno agli oggetti",
+      "Stima soltanto la classe più probabile della scena"
+    ],
+    "correct_index": 1,
+    "explanation": "La segmentazione individua pixel o regioni appartenenti a oggetti o categorie.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-009",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "facile",
+    "title": "Che cosa produce una semplice sogliatura binaria?",
+    "description": "Una soglia separa le intensità inferiori da quelle superiori.",
+    "code": null,
+    "options": [
+      "Un’immagine con intensità normalizzate fra 0 e 1",
+      "Una mappa continua dell’intensità dei bordi",
+      "Un’immagine con due valori di intensità",
+      "Un’immagine in scala di grigi con 256 livelli"
+    ],
+    "correct_index": 2,
+    "explanation": "Nella sogliatura binaria i pixel assumono due valori in base alla soglia.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-010",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "facile",
+    "title": "A che cosa serve il rilevatore di bordi Canny?",
+    "description": "Considera i punti in cui l’intensità dell’immagine cambia bruscamente.",
+    "code": null,
+    "options": [
+      "A identificare i bordi nella scena",
+      "A rendere uniformi le intensità dell’immagine",
+      "A individuare regioni con colori simili",
+      "A riconoscere le categorie degli oggetti"
+    ],
+    "correct_index": 0,
+    "explanation": "Canny cerca discontinuità significative dell’intensità per evidenziare i contorni.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-011",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "medio",
+    "title": "Perché si applica una sfocatura gaussiana prima di alcune analisi?",
+    "description": "I piccoli disturbi dei pixel possono produrre falsi dettagli.",
+    "code": null,
+    "options": [
+      "Per aumentare il contrasto dei bordi più fini",
+      "Per ricostruire dettagli assenti nell’immagine",
+      "Per trasformare automaticamente l’immagine in una maschera binaria",
+      "Per attenuare rumore e dettagli fini"
+    ],
+    "correct_index": 3,
+    "explanation": "La sfocatura gaussiana smussa le variazioni locali e può ridurre il rumore.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-012",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "medio",
+    "title": "Che cos’è un kernel in un filtro convoluzionale?",
+    "description": "Un filtro locale usa i valori dei pixel vicini.",
+    "code": null,
+    "options": [
+      "La matrice completa dei pixel in uscita",
+      "Una piccola matrice di coefficienti",
+      "Un insieme di etichette per le immagini",
+      "Una tabella delle frequenze delle intensità"
+    ],
+    "correct_index": 1,
+    "explanation": "Il kernel è una matrice di pesi applicata localmente ai pixel per calcolare nuovi valori.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-013",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "medio",
+    "title": "Che cosa mostra un istogramma delle intensità?",
+    "description": "Vuoi sapere quanti pixel hanno valori chiari e quanti scuri.",
+    "code": null,
+    "options": [
+      "La posizione dei bordi in ogni riga",
+      "L’ordine spaziale dei pixel",
+      "La distribuzione dei valori di intensità",
+      "La probabilità di ciascuna classe di oggetti"
+    ],
+    "correct_index": 2,
+    "explanation": "Un istogramma conta la frequenza dei diversi valori di intensità.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-014",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "medio",
+    "title": "Qual è lo scopo dell’OCR?",
+    "description": "Considera una fotografia contenente un cartello stradale scritto.",
+    "code": null,
+    "options": [
+      "Riconoscere testo presente in immagini",
+      "Localizzare volti nelle immagini",
+      "Assegnare una classe a ogni pixel",
+      "Generare una didascalia della scena"
+    ],
+    "correct_index": 0,
+    "explanation": "OCR significa riconoscimento ottico dei caratteri e serve a estrarre testo dalle immagini.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-015",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "medio",
+    "title": "Dove si trova di norma l’origine (0, 0) delle coordinate di un’immagine OpenCV?",
+    "description": "La posizione dei pixel è normalmente espressa rispetto a un angolo dell’immagine.",
+    "code": null,
+    "options": [
+      "Al centro",
+      "Nell’angolo in basso a destra",
+      "Nell’angolo in basso a sinistra",
+      "Nell’angolo in alto a sinistra"
+    ],
+    "correct_index": 3,
+    "explanation": "Nelle immagini OpenCV, l’origine delle coordinate si trova normalmente in alto a sinistra.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-016",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "medio",
+    "title": "Perché si usa la data augmentation durante l’addestramento?",
+    "description": "Rotazioni e ribaltamenti possono creare esempi variati senza nuove fotografie.",
+    "code": null,
+    "options": [
+      "Per bilanciare i dati cancellando tutte le classi rare",
+      "Per aumentare la varietà dei dati di training",
+      "Per valutare il modello esclusivamente sul training set",
+      "Per sostituire l’addestramento con immagini casuali"
+    ],
+    "correct_index": 1,
+    "explanation": "La data augmentation genera variazioni plausibili, migliorando spesso la capacità di generalizzazione.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-017",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "facile",
+    "title": "Quanti pixel contiene un’immagine da 640 × 480?",
+    "description": "La quantità totale dipende dal prodotto di larghezza e altezza.",
+    "code": null,
+    "options": [
+      "1.120",
+      "640.480",
+      "307.200",
+      "160.000"
+    ],
+    "correct_index": 2,
+    "explanation": "640 × 480 = 307.200 pixel, senza contare separatamente i canali colore.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-018",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "medio",
+    "title": "Che cosa misura l’Intersection over Union (IoU)?",
+    "description": "Si confrontano un riquadro predetto e il riquadro di riferimento.",
+    "code": null,
+    "options": [
+      "L’area di sovrapposizione divisa per l’area dell’unione",
+      "L’area di intersezione divisa per l’area del primo riquadro",
+      "L’area di unione divisa per l’area di intersezione",
+      "La distanza fra i centri dei due riquadri"
+    ],
+    "correct_index": 0,
+    "explanation": "IoU = area d’intersezione / area d’unione dei due riquadri.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-019",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "medio",
+    "title": "Che cosa accade di solito aumentando la soglia di confidenza delle rilevazioni?",
+    "description": "Vengono mantenute soltanto le predizioni che superano la soglia scelta.",
+    "code": null,
+    "options": [
+      "Vengono accettate più rilevazioni poco sicure",
+      "Cambiano le coordinate dei riquadri già prodotti",
+      "Aumenta necessariamente il richiamo di tutti gli oggetti",
+      "Vengono scartate più rilevazioni a bassa confidenza"
+    ],
+    "correct_index": 3,
+    "explanation": "Una soglia più alta filtra più predizioni con confidenza insufficiente; non garantisce che le restanti siano corrette.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-020",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "facile",
+    "title": "Come viene comunemente analizzato un video da un sistema di computer vision?",
+    "description": "Un video è composto da immagini successive nel tempo.",
+    "code": null,
+    "options": [
+      "Come una sola immagine ottenuta facendo la media dei frame",
+      "Come una sequenza di frame",
+      "Come il solo primo frame della sequenza",
+      "Come una singola etichetta senza informazioni temporali"
+    ],
+    "correct_index": 1,
+    "explanation": "I sistemi di visione analizzano spesso frame consecutivi e, quando necessario, il movimento fra essi.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-021",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "facile",
+    "title": "Che cosa rappresenta una maschera di segmentazione binaria?",
+    "description": "Ogni posizione della maschera corrisponde a una posizione nell’immagine.",
+    "code": null,
+    "options": [
+      "Una categoria unica per tutta l’immagine",
+      "Un insieme di riquadri con coordinate",
+      "Un’indicazione per pixel di appartenenza a una regione",
+      "Una mappa di intensità continue senza sogliatura"
+    ],
+    "correct_index": 2,
+    "explanation": "Una maschera binaria marca i pixel appartenenti o non appartenenti alla regione.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-022",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "medio",
+    "title": "Qual è la differenza fra rilevamento e riconoscimento facciale?",
+    "description": "Localizzare un volto non equivale a stabilire a chi appartenga.",
+    "code": null,
+    "options": [
+      "Il rilevamento trova volti; il riconoscimento cerca di associare un’identità",
+      "Il rilevamento identifica la persona; il riconoscimento localizza i volti",
+      "Entrambi assegnano necessariamente un’identità a ogni volto",
+      "Il rilevamento segmenta ogni pixel; il riconoscimento misura solo distanze"
+    ],
+    "correct_index": 0,
+    "explanation": "Il rilevamento localizza la presenza di volti; il riconoscimento prova a identificarli o confrontarli.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-023",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "medio",
+    "title": "Perché una variazione di illuminazione può peggiorare un modello visivo?",
+    "description": "La stessa scena può produrre pixel differenti in condizioni luminose diverse.",
+    "code": null,
+    "options": [
+      "Perché il modello diventa automaticamente invariabile alla luce",
+      "Perché i pixel mantengono necessariamente le stesse intensità",
+      "Perché la variazione modifica soltanto le etichette",
+      "Perché le caratteristiche visive possono cambiare rispetto ai dati di training"
+    ],
+    "correct_index": 3,
+    "explanation": "Le variazioni di luce modificano contrasto, ombre e intensità, rendendo più difficile la generalizzazione.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-024",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "facile",
+    "title": "Per quale compito è utile lo spazio colore HSV?",
+    "description": "Si vogliono selezionare pixel con una particolare tonalità.",
+    "code": null,
+    "options": [
+      "Per separare rosso, verde e blu",
+      "Per separare tonalità, saturazione e valore",
+      "Per rappresentare soltanto l’intensità luminosa",
+      "Per individuare automaticamente l’identità di un oggetto"
+    ],
+    "correct_index": 1,
+    "explanation": "HSV separa tonalità, saturazione e luminosità relativa, facilitando alcune selezioni basate sul colore.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "CV-025",
+    "category": "computer_vision",
+    "category_label": "Visione artificiale",
+    "difficulty": "medio",
+    "title": "Quale comportamento indica possibile overfitting nella classificazione di immagini?",
+    "description": "Confronta le prestazioni sulle immagini viste in training e su immagini nuove.",
+    "code": null,
+    "options": [
+      "Prestazioni scarse sia sul training sia sul test",
+      "Prestazioni simili e buone su training e test",
+      "Ottimi risultati in training ma scarsi su immagini nuove",
+      "Prestazioni migliori sul test rispetto al training"
+    ],
+    "correct_index": 2,
+    "explanation": "Un divario consistente tra training e dati nuovi può indicare che il modello ha memorizzato caratteristiche specifiche.",
+    "source_url": "https://docs.opencv.org/4.x/d2/d96/tutorial_py_table_of_contents_imgproc.html"
+  },
+  {
+    "id": "NLP-001",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "facile",
+    "title": "Che cosa significa la sigla NLP?",
+    "description": "È un settore dell’informatica che lavora con il linguaggio umano.",
+    "code": null,
+    "options": [
+      "Natural Language Processing",
+      "Network Learning Protocol",
+      "New Logic Program",
+      "Numeric Language Pattern"
+    ],
+    "correct_index": 0,
+    "explanation": "NLP sta per Natural Language Processing: elaborazione del linguaggio naturale.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-002",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "facile",
+    "title": "Che cos’è la tokenizzazione di un testo?",
+    "description": "È spesso uno dei primi passaggi di un sistema NLP.",
+    "code": null,
+    "options": [
+      "Ridurre ogni parola alla forma di dizionario",
+      "Assegnare un’etichetta grammaticale a ogni parola",
+      "Rimuovere soltanto articoli e preposizioni",
+      "Suddividere il testo in unità come parole o sottoparole"
+    ],
+    "correct_index": 3,
+    "explanation": "La tokenizzazione divide un testo in token, che possono essere parole, parti di parole o simboli.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-003",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "facile",
+    "title": "Quale compito svolge l’analisi del sentiment?",
+    "description": "Un’app analizza le recensioni di un film.",
+    "code": null,
+    "options": [
+      "Identifica la lingua del testo",
+      "Stima l’atteggiamento espresso nel testo",
+      "Estrae le persone e le località citate",
+      "Classifica lo scopo operativo del messaggio"
+    ],
+    "correct_index": 1,
+    "explanation": "L’analisi del sentiment cerca di stimare polarità o atteggiamento, per esempio positivo o negativo.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-004",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "facile",
+    "title": "Che tipo di entità è “Roma” nella frase «Vivo a Roma»?",
+    "description": "Un sistema NER assegna categorie a nomi di persone, luoghi e organizzazioni.",
+    "code": null,
+    "options": [
+      "Persona",
+      "Organizzazione",
+      "Località",
+      "Data"
+    ],
+    "correct_index": 2,
+    "explanation": "Nella frase il nome Roma indica un luogo, quindi un’entità geografica.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-005",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "facile",
+    "title": "Quale applicazione è un esempio di traduzione automatica?",
+    "description": "Un sistema trasforma un testo scritto da una lingua a un’altra.",
+    "code": null,
+    "options": [
+      "Tradurre una frase italiana in spagnolo",
+      "Riformulare una frase nella stessa lingua",
+      "Riassumere un testo italiano",
+      "Identificare la lingua di una frase"
+    ],
+    "correct_index": 0,
+    "explanation": "La traduzione automatica converte testi o frasi fra lingue diverse.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-006",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "facile",
+    "title": "A che cosa serve il rilevamento automatico della lingua?",
+    "description": "Hai ricevuto un messaggio e vuoi capire in quale lingua è scritto.",
+    "code": null,
+    "options": [
+      "A tradurre il testo nella lingua desiderata",
+      "A riconoscere l’intento della frase",
+      "A stimare il tono emotivo del testo",
+      "A identificare la lingua probabile del testo"
+    ],
+    "correct_index": 3,
+    "explanation": "Un classificatore di lingua stima se il testo è, per esempio, italiano, francese o inglese.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-007",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "facile",
+    "title": "Quale esempio rappresenta una classificazione del testo?",
+    "description": "Il sistema deve assegnare un’etichetta a un messaggio.",
+    "code": null,
+    "options": [
+      "Riassumere un articolo",
+      "Distinguere email spam e non spam",
+      "Tradurre una frase in un’altra lingua",
+      "Estrarre i nomi di persona da un testo"
+    ],
+    "correct_index": 1,
+    "explanation": "Un classificatore può assegnare alle email le etichette spam o non spam.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-008",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "facile",
+    "title": "Che cosa sono le stop word in alcuni sistemi NLP?",
+    "description": "Parole molto frequenti possono essere trattate diversamente in certi metodi.",
+    "code": null,
+    "options": [
+      "Parole che compaiono una sola volta nel corpus",
+      "Parole con significato negativo",
+      "Parole comuni come articoli e preposizioni",
+      "Segni di punteggiatura usati come confini delle frasi"
+    ],
+    "correct_index": 2,
+    "explanation": "Stop word è il nome dato a parole molto comuni, talvolta filtrate in elaborazioni come bag-of-words.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-009",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "facile",
+    "title": "Che cosa fa un sistema di riassunto automatico?",
+    "description": "Un testo lungo deve diventare più breve senza perdere le informazioni principali.",
+    "code": null,
+    "options": [
+      "Produce una versione sintetica del contenuto",
+      "Assegna una categoria all’argomento",
+      "Traduce il contenuto in un’altra lingua",
+      "Estrae soltanto i nomi propri"
+    ],
+    "correct_index": 0,
+    "explanation": "La sintesi automatica mira a conservare le idee principali in un testo più breve.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-010",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "facile",
+    "title": "Che cosa significa riconoscere l’intento di un messaggio?",
+    "description": "Un assistente riceve la frase «Vorrei prenotare un tavolo».",
+    "code": null,
+    "options": [
+      "Identificare la lingua del messaggio",
+      "Valutare quanto sia positivo il tono",
+      "Estrarre le persone menzionate",
+      "Capire quale azione vuole compiere l’utente"
+    ],
+    "correct_index": 3,
+    "explanation": "Il riconoscimento dell’intento mira a identificare lo scopo del messaggio, qui una prenotazione.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-011",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "medio",
+    "title": "Che cosa distingue la lemmatizzazione dallo stemming?",
+    "description": "Entrambe sono tecniche di normalizzazione di parole.",
+    "code": null,
+    "options": [
+      "Lo stemming usa sempre reti neurali",
+      "La lemmatizzazione punta a una forma lessicale; lo stemming può troncare le parole",
+      "La lemmatizzazione aggiunge soltanto prefissi",
+      "Sono esattamente la stessa operazione"
+    ],
+    "correct_index": 1,
+    "explanation": "La lemmatizzazione cerca una forma canonica, mentre lo stemming spesso applica regole di riduzione.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-012",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "medio",
+    "title": "Qual è una limitazione del modello bag-of-words?",
+    "description": "Confronta «il cane insegue il gatto» e «il gatto insegue il cane».",
+    "code": null,
+    "options": [
+      "Conserva necessariamente la sintassi completa",
+      "Rappresenta sempre il significato nel contesto",
+      "Ignora normalmente l’ordine delle parole",
+      "Distingue sempre parole omonime in base alla frase"
+    ],
+    "correct_index": 2,
+    "explanation": "Il bag-of-words tradizionale usa conteggi di termini e non conserva l’ordine della frase.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-013",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "medio",
+    "title": "Perché si utilizza TF-IDF?",
+    "description": "Vuoi rappresentare quanto un termine aiuti a distinguere un documento da altri.",
+    "code": null,
+    "options": [
+      "Per pesare parole frequenti nel documento ma meno comuni nel corpus",
+      "Per dare lo stesso peso a ogni parola",
+      "Per pesare maggiormente le parole comuni in tutti i documenti",
+      "Per ordinare le parole in base alla posizione nella frase"
+    ],
+    "correct_index": 0,
+    "explanation": "TF-IDF combina frequenza nel documento e rarità nel corpus, riducendo il peso di termini diffusissimi.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-014",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "medio",
+    "title": "Che cosa sono i word embedding?",
+    "description": "I modelli possono rappresentare parole mediante numeri in uno spazio vettoriale.",
+    "code": null,
+    "options": [
+      "Codifiche indipendenti basate solo sulla posizione alfabetica",
+      "Etichette grammaticali assegnate a ogni parola",
+      "Liste delle frequenze dei caratteri in ogni parola",
+      "Rappresentazioni numeriche apprese delle parole"
+    ],
+    "correct_index": 3,
+    "explanation": "Gli embedding sono vettori numerici che possono catturare relazioni semantiche o d’uso.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-015",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "medio",
+    "title": "A che cosa serve il part-of-speech tagging?",
+    "description": "Si vuole sapere quale ruolo grammaticale svolge ogni parola.",
+    "code": null,
+    "options": [
+      "A riconoscere solo i nomi propri",
+      "Ad assegnare etichette come nome, verbo e aggettivo",
+      "A calcolare la durata di una frase pronunciata",
+      "A creare un riassunto di un video"
+    ],
+    "correct_index": 1,
+    "explanation": "Il POS tagging assegna a token o parole categorie grammaticali.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-016",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "medio",
+    "title": "Perché è importante considerare la negazione nel sentiment?",
+    "description": "Confronta le frasi «È bello» e «Non è bello».",
+    "code": null,
+    "options": [
+      "Le negazioni rendono il testo sempre positivo",
+      "Le negazioni non influenzano mai il significato",
+      "La negazione può invertire o cambiare l’atteggiamento espresso",
+      "La negazione elimina il soggetto"
+    ],
+    "correct_index": 2,
+    "explanation": "La parola «non» cambia l’interpretazione del giudizio e può modificare la polarità del sentiment.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-017",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "medio",
+    "title": "Perché il contesto è utile per una parola ambigua come «pesca»?",
+    "description": "La parola può indicare un frutto o un’attività.",
+    "code": null,
+    "options": [
+      "Permette di scegliere il significato più plausibile nella frase",
+      "Fornisce sempre una traduzione unica",
+      "Rimuove la punteggiatura automaticamente",
+      "Converte la parola in un numero casuale"
+    ],
+    "correct_index": 0,
+    "explanation": "Le parole vicine aiutano a distinguere significati diversi della stessa forma.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-018",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "medio",
+    "title": "Che cosa stima un modello linguistico autoregressivo durante la generazione?",
+    "description": "Il modello usa il contesto già disponibile per continuare una sequenza.",
+    "code": null,
+    "options": [
+      "La probabilità della sola etichetta di sentiment",
+      "La frequenza assoluta di tutte le parole del corpus",
+      "Il numero definitivo di frasi della risposta",
+      "La probabilità dei possibili token successivi"
+    ],
+    "correct_index": 3,
+    "explanation": "Nella generazione autoregressiva, il modello stima il prossimo token a partire dal contesto precedente.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-019",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "medio",
+    "title": "Che cosa si intende per allucinazione di un modello linguistico?",
+    "description": "Una risposta può sembrare credibile pur contenendo informazioni inventate.",
+    "code": null,
+    "options": [
+      "Un errore esclusivamente grammaticale",
+      "Un contenuto plausibile ma falso o non supportato",
+      "Una risposta breve ma corretta",
+      "Un rifiuto esplicito di rispondere per mancanza di dati"
+    ],
+    "correct_index": 1,
+    "explanation": "Un’allucinazione è un’affermazione generata che non è attendibile o supportata dai fatti.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-020",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "medio",
+    "title": "Che cos’è il fine-tuning di un modello?",
+    "description": "Distingui un cambio delle istruzioni da un aggiornamento dei parametri del modello.",
+    "code": null,
+    "options": [
+      "Aggiungere esempi solo al prompt",
+      "Recuperare documenti senza aggiornare i pesi",
+      "Un ulteriore addestramento su dati specifici",
+      "Cambiare soltanto la temperatura di generazione"
+    ],
+    "correct_index": 2,
+    "explanation": "Il fine-tuning aggiorna i parametri del modello tramite ulteriore addestramento.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-021",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "medio",
+    "title": "Che cosa indica la finestra di contesto di un modello?",
+    "description": "Un modello può considerare soltanto una quantità limitata di token in una singola elaborazione.",
+    "code": null,
+    "options": [
+      "La quantità massima di contesto gestibile nelle condizioni previste dal modello",
+      "Il numero totale di parametri del modello",
+      "Il numero di documenti usati nell’addestramento",
+      "La lunghezza fissa di ogni risposta generata"
+    ],
+    "correct_index": 0,
+    "explanation": "La finestra di contesto determina la quantità di token che il modello può gestire insieme, secondo la configurazione.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-022",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "medio",
+    "title": "Qual è l’idea principale di RAG?",
+    "description": "Un assistente deve rispondere usando anche documenti esterni pertinenti.",
+    "code": null,
+    "options": [
+      "Aggiornare i pesi del modello per ogni documento recuperato",
+      "Usare esclusivamente la memoria del modello senza recupero",
+      "Riassumere il prompt prima di ogni risposta senza consultare fonti",
+      "Recuperare informazioni e usarle come contesto per generare una risposta"
+    ],
+    "correct_index": 3,
+    "explanation": "RAG, Retrieval-Augmented Generation, recupera contenuti pertinenti e li fornisce al modello durante la generazione.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-023",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "facile",
+    "title": "Qual è una buona precauzione quando si usa un servizio NLP esterno?",
+    "description": "Il testo inviato potrebbe includere dati personali o riservati.",
+    "code": null,
+    "options": [
+      "Inviare sempre tutti i documenti disponibili",
+      "Minimizzare o anonimizzare dati sensibili prima dell’invio",
+      "Pubblicare automaticamente i messaggi degli utenti",
+      "Disabilitare tutte le verifiche sulle risposte"
+    ],
+    "correct_index": 1,
+    "explanation": "Prima di inviare testo a servizi esterni è importante ridurre o proteggere i dati sensibili.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-024",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "medio",
+    "title": "Come possono influenzare un modello i pregiudizi presenti nei dati di addestramento?",
+    "description": "Un modello apprende regolarità dai testi che incontra.",
+    "code": null,
+    "options": [
+      "Scompaiono automaticamente aumentando il numero di parametri",
+      "Influenzano soltanto la velocità di generazione",
+      "Possono portare a risultati distorti o discriminatori",
+      "Vengono sempre eliminati dalla tokenizzazione"
+    ],
+    "correct_index": 2,
+    "explanation": "Bias nei dati possono essere riprodotti o amplificati nelle previsioni e nei testi generati.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "NLP-025",
+    "category": "nlp",
+    "category_label": "Elaborazione del linguaggio naturale",
+    "difficulty": "facile",
+    "title": "Come verificare meglio la correttezza fattuale di una risposta generata?",
+    "description": "La fluidità linguistica da sola non prova che un’affermazione sia vera.",
+    "code": null,
+    "options": [
+      "Confrontarla con fonti affidabili e verificabili",
+      "Chiedere allo stesso modello di confermare senza fornire prove",
+      "Controllare soltanto la correttezza grammaticale",
+      "Considerare sufficiente una citazione senza aprirla"
+    ],
+    "correct_index": 0,
+    "explanation": "Per valutare l’accuratezza fattuale bisogna controllare le affermazioni rispetto a fonti attendibili.",
+    "source_url": "https://huggingface.co/docs/course/chapter1/1"
+  },
+  {
+    "id": "ML-001",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "facile",
+    "title": "Che cosa caratterizza l’apprendimento supervisionato?",
+    "description": "Durante l’addestramento sono disponibili esempi con risultati attesi.",
+    "code": null,
+    "options": [
+      "Raggruppa esempi senza conoscere etichette obiettivo",
+      "Apprende esclusivamente da ricompense dopo le azioni",
+      "Richiede che le etichette siano predette prima del training",
+      "Impara da esempi con etichette o valori obiettivo"
+    ],
+    "correct_index": 3,
+    "explanation": "Nel supervised learning il modello apprende una relazione tra input e target noti.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-002",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "facile",
+    "title": "Che cosa cerca un algoritmo di clustering?",
+    "description": "Un insieme di osservazioni non dispone di etichette di classe.",
+    "code": null,
+    "options": [
+      "Di assegnare etichette note a ogni nuovo esempio",
+      "Di raggruppare osservazioni simili",
+      "Di prevedere un valore numerico continuo",
+      "Di apprendere azioni da una sequenza di ricompense"
+    ],
+    "correct_index": 1,
+    "explanation": "Il clustering raggruppa dati in base a caratteristiche o somiglianze, di norma senza etichette.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-003",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "facile",
+    "title": "Quale problema è un esempio di classificazione?",
+    "description": "Il risultato da prevedere è una categoria.",
+    "code": null,
+    "options": [
+      "Stimare i gradi di domani",
+      "Prevedere il prezzo esatto di una casa",
+      "Prevedere se un’email è spam o no",
+      "Calcolare la media di una lista"
+    ],
+    "correct_index": 2,
+    "explanation": "Spam/non spam sono classi discrete, quindi il problema è di classificazione.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-004",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "facile",
+    "title": "Quale problema è un esempio di regressione?",
+    "description": "Il modello deve prevedere un valore numerico continuo.",
+    "code": null,
+    "options": [
+      "Stimare il prezzo di una casa",
+      "Scegliere fra gatto e cane",
+      "Riconoscere la lingua di un testo",
+      "Dividere clienti in gruppi senza etichette"
+    ],
+    "correct_index": 0,
+    "explanation": "La regressione predice grandezze numeriche, come il prezzo di un immobile.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-005",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "facile",
+    "title": "Perché si divide un dataset in training e test?",
+    "description": "Si vuole valutare il modello anche su esempi non usati per addestrarlo.",
+    "code": null,
+    "options": [
+      "Per usare gli stessi esempi in training e valutazione",
+      "Per scegliere le etichette dopo aver osservato le predizioni",
+      "Per misurare soltanto l’adattamento ai dati di training",
+      "Per misurare la generalizzazione su dati non visti"
+    ],
+    "correct_index": 3,
+    "explanation": "Un insieme di test separato aiuta a stimare come il modello si comporterà su dati nuovi.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-006",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "facile",
+    "title": "Che cos’è l’overfitting?",
+    "description": "Il modello ottiene ottimi risultati sui dati di training ma peggiora molto sui nuovi dati.",
+    "code": null,
+    "options": [
+      "Un modello troppo semplice per descrivere i dati",
+      "Un adattamento eccessivo ai dati di training",
+      "Un errore simile e alto su training e test",
+      "Una trasformazione che rende uguali le scale delle feature"
+    ],
+    "correct_index": 1,
+    "explanation": "L’overfitting si verifica quando il modello apprende particolarità del training e generalizza male.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-007",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "facile",
+    "title": "Che cos’è l’underfitting?",
+    "description": "Anche sui dati con cui si allena, il modello non riesce a catturare bene le relazioni.",
+    "code": null,
+    "options": [
+      "Un modello che memorizza il rumore del training",
+      "Un errore basso in training e alto sul test",
+      "Un modello troppo semplice o poco addestrato per il problema",
+      "Un modello che generalizza bene sui dati nuovi"
+    ],
+    "correct_index": 2,
+    "explanation": "L’underfitting indica che il modello non ha imparato sufficientemente il fenomeno, neppure nel training.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-008",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "facile",
+    "title": "Che cosa rappresenta una feature?",
+    "description": "Un modello usa informazioni di ingresso per fare previsioni.",
+    "code": null,
+    "options": [
+      "Una caratteristica misurabile usata come input",
+      "Il valore obiettivo da prevedere",
+      "Un parametro appreso durante il training",
+      "Una metrica di valutazione del modello"
+    ],
+    "correct_index": 0,
+    "explanation": "Una feature è una variabile descrittiva in ingresso, come l’età o la superficie di una casa.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-009",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "facile",
+    "title": "Che cos’è una label in un dataset supervisionato?",
+    "description": "Si addestra un classificatore con esempi già classificati.",
+    "code": null,
+    "options": [
+      "Una caratteristica di input",
+      "Un peso appreso dalla rete",
+      "Un iperparametro scelto prima del training",
+      "Il risultato desiderato associato a un esempio"
+    ],
+    "correct_index": 3,
+    "explanation": "La label è l’etichetta o il valore target che il modello deve imparare a prevedere.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-010",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "facile",
+    "title": "Che cosa significa fare inferenza con un modello già addestrato?",
+    "description": "Il modello riceve nuovi dati e produce un risultato.",
+    "code": null,
+    "options": [
+      "Aggiornare i pesi con nuovi esempi etichettati",
+      "Usare il modello per effettuare una previsione",
+      "Scegliere gli iperparametri con la cross-validation",
+      "Misurare la perdita prima di ogni aggiornamento dei pesi"
+    ],
+    "correct_index": 1,
+    "explanation": "L’inferenza consiste nell’applicare il modello addestrato a nuovi input.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-011",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "facile",
+    "title": "Qual è l’accuratezza se 90 predizioni su 100 sono corrette?",
+    "description": "L’accuracy è la quota di predizioni corrette sul totale.",
+    "code": null,
+    "options": [
+      "10%",
+      "80%",
+      "90%",
+      "100%"
+    ],
+    "correct_index": 2,
+    "explanation": "90 / 100 = 0,90, cioè 90%.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-012",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "medio",
+    "title": "A che cosa serve una matrice di confusione?",
+    "description": "Si confrontano le classi vere con quelle predette da un classificatore.",
+    "code": null,
+    "options": [
+      "A mostrare conteggi di predizioni corrette e sbagliate per classe",
+      "A mostrare le correlazioni tra le feature",
+      "A mostrare i pesi appresi da una rete",
+      "A mostrare soltanto l’errore medio di regressione"
+    ],
+    "correct_index": 0,
+    "explanation": "La confusion matrix riassume come le previsioni si distribuiscono rispetto alle etichette reali.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-013",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "medio",
+    "title": "Qual è la precision se 8 delle 10 predizioni positive sono davvero positive?",
+    "description": "La precision considera quante predizioni positive sono corrette.",
+    "code": null,
+    "options": [
+      "20%",
+      "40%",
+      "50%",
+      "80%"
+    ],
+    "correct_index": 3,
+    "explanation": "Precision = veri positivi / positivi predetti = 8 / 10 = 80%.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-014",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "medio",
+    "title": "Qual è la recall se vengono trovati 8 dei 20 casi realmente positivi?",
+    "description": "La recall misura quanti casi positivi reali vengono individuati.",
+    "code": null,
+    "options": [
+      "80%",
+      "40%",
+      "20%",
+      "60%"
+    ],
+    "correct_index": 1,
+    "explanation": "Recall = veri positivi / positivi reali = 8 / 20 = 40%.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-015",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "medio",
+    "title": "Che cosa si intende per data leakage?",
+    "description": "Durante la preparazione dei dati il modello riceve informazioni che non dovrebbe conoscere.",
+    "code": null,
+    "options": [
+      "Dati di training mancanti in alcune colonne",
+      "Un modello troppo semplice per i dati",
+      "Informazioni del test o del futuro che contaminano l’addestramento",
+      "Una suddivisione dei dati eseguita senza mescolarli"
+    ],
+    "correct_index": 2,
+    "explanation": "Il leakage introduce informazioni non disponibili al momento della previsione, producendo valutazioni ingannevoli.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-016",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "medio",
+    "title": "Perché la standardizzazione può essere utile per k-NN?",
+    "description": "k-NN confronta la distanza fra osservazioni e le feature possono avere scale diverse.",
+    "code": null,
+    "options": [
+      "Evita che una feature numericamente grande domini la distanza",
+      "Attribuisce automaticamente più peso alla feature più grande",
+      "Elimina le osservazioni con valori negativi",
+      "Trasforma ogni feature in un’etichetta di classe"
+    ],
+    "correct_index": 0,
+    "explanation": "Standardizzare le feature aiuta a rendere confrontabili le scale usate nelle distanze.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-017",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "medio",
+    "title": "A che cosa serve la cross-validation?",
+    "description": "Un’unica divisione fra training e validation potrebbe dare una stima instabile.",
+    "code": null,
+    "options": [
+      "A riutilizzare il test finale per ogni scelta di iperparametri",
+      "A valutare soltanto il training set",
+      "A garantire la stessa accuratezza su qualsiasi dataset",
+      "A valutare il modello su più suddivisioni dei dati"
+    ],
+    "correct_index": 3,
+    "explanation": "La cross-validation ripete training e valutazione su partizioni differenti per ottenere stime più robuste.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-018",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "medio",
+    "title": "Che cos’è un iperparametro?",
+    "description": "Alcune impostazioni vengono scelte prima o durante l’organizzazione dell’addestramento.",
+    "code": null,
+    "options": [
+      "Un’etichetta assegnata dal modello",
+      "Una configurazione come il numero di vicini in k-NN",
+      "Un valore predetto per ogni osservazione",
+      "Una riga casuale del dataset"
+    ],
+    "correct_index": 1,
+    "explanation": "Un iperparametro controlla il comportamento dell’algoritmo e non è appreso direttamente come i pesi dai dati di training.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-019",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "medio",
+    "title": "Che cosa sono i pesi di una rete neurale?",
+    "description": "Una rete combina gli ingressi con parametri numerici.",
+    "code": null,
+    "options": [
+      "Le etichette obiettivo associate agli esempi",
+      "Le predizioni già memorizzate per ogni input",
+      "Parametri numerici adattati durante l’addestramento",
+      "Le metriche calcolate sul test set"
+    ],
+    "correct_index": 2,
+    "explanation": "I pesi sono parametri appresi che influenzano le trasformazioni e le predizioni della rete.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-020",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "medio",
+    "title": "Che cosa controlla il learning rate?",
+    "description": "Un algoritmo aggiorna progressivamente i parametri del modello.",
+    "code": null,
+    "options": [
+      "L’ampiezza dei passi di aggiornamento dei parametri",
+      "Il numero di esempi in ciascun batch",
+      "Il numero totale di epoche",
+      "La proporzione di esempi nel test set"
+    ],
+    "correct_index": 0,
+    "explanation": "Il learning rate determina quanto grandi sono gli aggiornamenti effettuati a ogni passo.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-021",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "medio",
+    "title": "Perché l’accuracy può essere fuorviante con classi molto sbilanciate?",
+    "description": "Immagina il 99% di esempi negativi e l’1% di positivi.",
+    "code": null,
+    "options": [
+      "Perché pesa necessariamente di più la classe minoritaria",
+      "Perché conta soltanto le predizioni positive",
+      "Perché misura soltanto gli errori della classe maggioritaria",
+      "Perché predire sempre la classe maggioritaria può dare un valore alto"
+    ],
+    "correct_index": 3,
+    "explanation": "Con forte sbilanciamento, predire quasi sempre la classe maggioritaria può apparire accurato pur ignorando i casi rari.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-022",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "facile",
+    "title": "Come prende decisioni un albero di decisione?",
+    "description": "L’algoritmo divide progressivamente i dati in sottogruppi.",
+    "code": null,
+    "options": [
+      "Confrontando sempre ogni esempio con tutti i vicini",
+      "Applicando condizioni successive sui valori delle feature",
+      "Assegnando ogni esempio al centroide più vicino",
+      "Applicando soltanto una combinazione lineare senza condizioni"
+    ],
+    "correct_index": 1,
+    "explanation": "Un decision tree suddivide i dati attraverso condizioni che portano a rami e foglie.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-023",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "medio",
+    "title": "Che cosa richiede normalmente k-means come input principale?",
+    "description": "Si vuole suddividere un insieme di punti in un numero scelto di gruppi.",
+    "code": null,
+    "options": [
+      "L’etichetta di classe di ciascun punto",
+      "Il numero di alberi da addestrare",
+      "Il numero k di cluster da individuare",
+      "Il numero di vicini da consultare per ogni previsione"
+    ],
+    "correct_index": 2,
+    "explanation": "K-means richiede di scegliere k, cioè il numero di gruppi verso cui organizzare i dati.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-024",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "medio",
+    "title": "Quale ruolo ha la ricompensa nell’apprendimento per rinforzo?",
+    "description": "Un agente compie azioni e riceve segnali dall’ambiente.",
+    "code": null,
+    "options": [
+      "Fornisce un segnale sugli esiti delle azioni",
+      "Fornisce sempre l’etichetta corretta per ogni azione",
+      "Misura soltanto la distanza fra gli stati",
+      "Stabilisce la classe di ogni esempio del training set"
+    ],
+    "correct_index": 0,
+    "explanation": "Il segnale di ricompensa guida l’agente verso comportamenti che massimizzano il ritorno atteso.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  },
+  {
+    "id": "ML-025",
+    "category": "machine_learning",
+    "category_label": "Apprendimento automatico",
+    "difficulty": "medio",
+    "title": "Perché il test set non dovrebbe guidare ripetutamente le scelte del modello?",
+    "description": "Se si cambia il modello finché migliora sul test, il test non è più una valutazione indipendente.",
+    "code": null,
+    "options": [
+      "Perché è necessario usare tutti i dati nel training",
+      "Perché il test serve solo a misurare il tempo di inferenza",
+      "Perché le scelte devono massimizzare il risultato sul test finale",
+      "Perché si rischia di adattare indirettamente le scelte ai dati di test"
+    ],
+    "correct_index": 3,
+    "explanation": "Usare ripetutamente i risultati del test per ottimizzare il modello produce una stima troppo ottimistica delle prestazioni.",
+    "source_url": "https://scikit-learn.org/stable/supervised_learning.html"
+  }
+]

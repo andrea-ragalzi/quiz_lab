@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ code }} — QuizLab{% endblock %}
+{% block content %}
+  <div class="container">
+    <section class="quiz-card error-card">
+      <div class="eyebrow">{{ code }}</div>
+      <h1>{{ 'Pagina non trovata' if code == 404 else title|italian }}</h1>
+      <p>{{ message|italian }}</p>
+      <a class="btn btn-primary" href="{{ url_for('main.home') }}">Torna alla pagina iniziale →</a>
+    </section>
+  </div>
+{% endblock %}

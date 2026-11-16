@@ -1,0 +1,10 @@
+# Prettier owns standalone CSS and JavaScript only.
+# Jinja templates are formatted by djLint; Python by Ruff.
+app/templates/
+*.html
+*.py
+*.md
+.venv/
+node_modules/
+instance/
+data/

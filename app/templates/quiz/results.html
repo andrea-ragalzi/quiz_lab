@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}I tuoi risultati — QuizLab{% endblock %}
+{% block content %}
+  <div class="container">
+    <div class="page-title">
+      <div class="eyebrow"><span class="dot"></span> ROUND COMPLETATO</div>
+      <h1>I tuoi risultati</h1>
+      <p>{{ category|italian if category else 'Quiz misto di Python e AI' }} · Ecco le risposte del round.</p>
+    </div>
+    <section class="result-hero" aria-label="Riepilogo del round">
+      <div class="result-visual">
+        <div class="result-circle score-{{ score }}">
+          <div class="result-center"><strong>{{ percentage }}%</strong><span>risposte corrette</span></div>
+        </div>
+      </div>
+      <div class="result-text">
+        <h2>Round completato</h2>
+        <p>Hai risposto a tutte e dieci le domande.</p>
+        <div class="result-stats">
+          <div class="result-stat"><strong>{{ score }}/10</strong><span>Risposte corrette</span></div>
+          <div class="result-stat"><strong>{{ 10 - score }}</strong><span>Da ripassare</span></div>
+          <div class="result-stat"><strong>+{{ score }}</strong><span>Punti guadagnati</span></div>
+        </div>
+        <div class="result-actions">
+          <form method="post" action="{{ url_for('quiz.start') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            {% if category %}<input type="hidden" name="category" value="{{ category }}">{% endif %}
+            <button class="btn btn-primary btn-large" type="submit">Gioca ancora ↗</button>
+          </form>
+          <a class="btn btn-outline btn-large"
+             href="{{ url_for('leaderboard.index') }}">Classifica →</a>
+        </div>
+      </div>
+    </section>
+    <section class="section" aria-labelledby="review-title">
+      <h2 id="review-title">Ripassa le risposte</h2>
+      {% for slot in round.answers %}
+        <details class="review-card">
+          <summary>{{ '✓' if slot.awarded_points else '✕' }} Domanda {{ slot.position + 1 }} · {{ slot.snapshot.category|italian }}</summary>
+          <pre class="question-text">{{ slot.snapshot.text }}</pre>
+          <p>La tua risposta: {{ slot.snapshot.options[slot.selected_option] }}</p>
+          <p><strong>Risposta corretta: {{ slot.snapshot.options[slot.snapshot.correct_index] }}</strong></p>
+          <p>{{ slot.snapshot.explanation }}</p>
+        </details>
+      {% endfor %}
+    </section>
+  </div>
+{% endblock %}
