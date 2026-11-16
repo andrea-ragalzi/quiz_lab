@@ -8,3 +8,4 @@ instance/
 *.sqlite*
 *.egg-info/
 node_modules/
+.zed/

@@ -210,9 +210,7 @@ JavaScript checks. Each file type has exactly one formatter:
 | ESLint | JavaScript lint (`eslint.config.mjs`) |
 | Prettier | Standalone CSS and JavaScript formatting |
 
-Pyright uses the interpreter in `.venv` and targets Python 3.11. The project's
-`.zed/settings.json` makes Zed use Pyright and Ruff and format templates with
-djLint.
+Pyright uses the interpreter in `.venv` and targets Python 3.11.
 
 ## Limitations
 
