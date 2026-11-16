@@ -1,14 +1,16 @@
 """Registration and session lifecycle."""
 
 from flask import Blueprint, flash, redirect, render_template, session, url_for
-from flask_login import current_user, login_required, login_user, logout_user
-from sqlalchemy import select
-from sqlalchemy.exc import IntegrityError
+from flask_login import current_user, login_required, logout_user
 from werkzeug.wrappers import Response
 
 from app.auth.forms import LoginForm, RegistrationForm, validated_text
-from app.extensions import db
-from app.models import User
+from app.auth.service import (
+    DuplicateIdentity,
+    authenticate,
+    register_user,
+    start_session,
+)
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
@@ -19,23 +21,16 @@ def register() -> str | Response:
         return redirect(url_for("quiz.index"))
     form = RegistrationForm()
     if form.validate_on_submit():
-        nickname = validated_text(form.nickname)
-        user = User(
-            username=validated_text(form.username).lower(),
-            nickname=nickname,
-            nickname_key=nickname.lower(),
-        )
-        user.set_password(validated_text(form.password))
         try:
-            db.session.add(user)
-            db.session.commit()
-        except IntegrityError:
-            db.session.rollback()
+            user = register_user(
+                validated_text(form.username),
+                validated_text(form.nickname),
+                validated_text(form.password),
+            )
+        except DuplicateIdentity:
             flash("Nome utente o nickname già in uso.", "error")
         else:
-            session.clear()
-            login_user(user)
-            session.permanent = True
+            start_session(user)
             return redirect(url_for("quiz.index"))
     return render_template("auth/form.html", form=form, registering=True)
 
@@ -46,16 +41,11 @@ def login() -> str | Response:
         return redirect(url_for("quiz.index"))
     form = LoginForm()
     if form.validate_on_submit():
-        user = db.session.scalar(
-            select(User).where(
-                User.username == validated_text(form.username).lower(),
-            )
+        user = authenticate(
+            validated_text(form.username), validated_text(form.password)
         )
-        if user and user.check_password(validated_text(form.password)):
-            session.clear()
-            login_user(user)
-            session.permanent = True
-            # Always use a known local landing page; ignore arbitrary next URLs.
+        if user:
+            start_session(user)
             return redirect(url_for("quiz.index"))
         flash("Nome utente o password non validi.", "error")
     return render_template("auth/form.html", form=form, registering=False)

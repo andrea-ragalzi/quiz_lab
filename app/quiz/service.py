@@ -10,7 +10,7 @@ from werkzeug.exceptions import BadRequest, Conflict, NotFound
 
 from app.domain import CATEGORY_LABELS, OPTION_COUNT, ROUND_LENGTH
 from app.extensions import db
-from app.models import AnswerSnapshot, QuizRound, utc_now
+from app.models import AnswerSnapshot, QuizAnswer, QuizRound, utc_now
 from app.repositories.questions import QuestionRepository
 from app.repositories.rounds import RoundRepository
 from app.repositories.users import UserRepository
@@ -161,3 +161,46 @@ def round_summary(round_: QuizRound) -> RoundSummary:
         ),
         "percentage": score * 100 // ROUND_LENGTH,
     }
+
+
+def active_round(user_id: int) -> QuizRound | None:
+    return RoundRepository(db.session).active_for(user_id)
+
+
+def quiz_overview(user_id: int, category: str | None) -> dict[str, Any]:
+    validate_category(category)
+    active = active_round(user_id)
+    counts = category_counts()
+    return {
+        "active": active,
+        "category": category,
+        "categories": CATEGORY_LABELS,
+        "category_counts": counts,
+        "question_count": counts.get(category, 0) if category else sum(counts.values()),
+        "round_length": ROUND_LENGTH,
+        "active_category": round_category(active) if active else None,
+    }
+
+
+def current_slot(
+    round_: QuizRound, feedback_id: int | None
+) -> tuple[QuizAnswer, bool] | None:
+    slot = next(
+        (
+            a
+            for a in round_.answers
+            if a.id == feedback_id and a.selected_option is not None
+        ),
+        None,
+    )
+    feedback = slot is not None
+    if not slot:
+        slot = next((a for a in round_.answers if a.selected_option is None), None)
+    return (slot, feedback) if slot is not None else None
+
+
+def completed_round(round_id: str, user_id: int) -> QuizRound:
+    round_ = owned_round(round_id, user_id)
+    if not round_.completed_at:
+        raise Conflict("Completa il round prima di vedere i risultati.")
+    return round_

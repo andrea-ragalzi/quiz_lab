@@ -2,21 +2,19 @@
 
 from flask import Blueprint, abort, redirect, render_template, request, url_for
 from flask_login import login_required
-from sqlalchemy import select
 from werkzeug.wrappers import Response
 
 from app.auth.identity import authenticated_user
-from app.domain import CATEGORY_LABELS, OPTION_COUNT, ROUND_LENGTH
-from app.extensions import db
-from app.models import QuizRound
+from app.domain import OPTION_COUNT
 from app.quiz.service import (
-    category_counts,
+    completed_round,
+    current_slot,
     owned_round,
+    quiz_overview,
     round_category,
     round_summary,
     start_round,
     submit_answer,
-    validate_category,
 )
 
 bp = Blueprint("quiz", __name__, url_prefix="/quiz")
@@ -26,23 +24,8 @@ bp = Blueprint("quiz", __name__, url_prefix="/quiz")
 @login_required
 def index() -> str:
     category = request.args.get("category") or None
-    validate_category(category)
-    active = db.session.scalar(
-        select(QuizRound).where(
-            QuizRound.user_id == authenticated_user().id,
-            QuizRound.completed_at.is_(None),
-        )
-    )
-    counts = category_counts()
     return render_template(
-        "quiz/index.html",
-        active=active,
-        category=category,
-        categories=CATEGORY_LABELS,
-        category_counts=counts,
-        question_count=counts.get(category, 0) if category else sum(counts.values()),
-        round_length=ROUND_LENGTH,
-        active_category=round_category(active) if active else None,
+        "quiz/index.html", **quiz_overview(authenticated_user().id, category)
     )
 
 
@@ -59,17 +42,10 @@ def start() -> Response:
 @login_required
 def play(round_id: str) -> str | Response:
     round_ = owned_round(round_id, authenticated_user().id)
-    answers = round_.answers
-    feedback_id = request.args.get("feedback", type=int)
-    slot = next(
-        (a for a in answers if a.id == feedback_id and a.selected_option is not None),
-        None,
-    )
-    feedback = slot is not None
-    if not slot:
-        slot = next((a for a in answers if a.selected_option is None), None)
-    if slot is None:
+    result = current_slot(round_, request.args.get("feedback", type=int))
+    if result is None:
         return redirect(url_for("quiz.results", round_id=round_id))
+    slot, feedback = result
     return render_template(
         "quiz/play.html",
         round=round_,
@@ -98,9 +74,7 @@ def answer(round_id: str) -> Response:
 @bp.get("/<round_id>/results")
 @login_required
 def results(round_id: str) -> str:
-    round_ = owned_round(round_id, authenticated_user().id)
-    if not round_.completed_at:
-        abort(409, "Completa il round prima di vedere i risultati.")
+    round_ = completed_round(round_id, authenticated_user().id)
     return render_template(
         "quiz/results.html",
         round=round_,
