@@ -16,7 +16,7 @@ from app import JsonFormatter
 from app.extensions import db
 from app.models import QuizAnswer, User
 from app.questions import STATIC_IT_PATH
-from app.quiz.service import take_questions
+from app.quiz.draw_state import take_questions
 from app.weather.service import WeatherService, transform_days
 from tests.helpers import present
 

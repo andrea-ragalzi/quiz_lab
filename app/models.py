@@ -2,7 +2,7 @@
 
 import uuid
 from datetime import UTC, datetime
-from typing import Any, NotRequired, TypedDict
+from typing import NotRequired, TypedDict
 
 from flask_login import UserMixin
 from sqlalchemy import CheckConstraint, ForeignKey, Index, UniqueConstraint, text
@@ -11,6 +11,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from app.domain import DIFFICULTIES, OPTION_COUNT, ROUND_LENGTH
 from app.extensions import Model, db
+from app.quiz.draw_state import UserBag
 
 
 class QuestionSnapshot(TypedDict):
@@ -43,7 +44,7 @@ class User(UserMixin, Model):
     nickname_key: Mapped[str] = mapped_column(db.String(32), unique=True)
     password_hash: Mapped[str] = mapped_column(db.String(255))
     total_score: Mapped[int] = mapped_column(default=0, index=True)
-    bag: Mapped[dict[str, Any]] = mapped_column(db.JSON, default=dict)
+    bag: Mapped[UserBag] = mapped_column(db.JSON, default=dict)
     rounds: Mapped[list["QuizRound"]] = relationship(back_populates="user")
     __table_args__ = (CheckConstraint("total_score >= 0", name="score_nonnegative"),)
 

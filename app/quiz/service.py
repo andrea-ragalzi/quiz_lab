@@ -1,8 +1,6 @@
 """Transactional quiz progression and server-owned cumulative scoring."""
 
-import hashlib
 import random
-from collections.abc import Mapping
 from typing import Any, TypedDict
 
 from sqlalchemy import text
@@ -11,17 +9,10 @@ from werkzeug.exceptions import BadRequest, Conflict, NotFound
 from app.domain import CATEGORY_LABELS, OPTION_COUNT, ROUND_LENGTH
 from app.extensions import db
 from app.models import AnswerSnapshot, QuizAnswer, QuizRound, utc_now
+from app.quiz.draw_state import read_state, take_questions, write_state
 from app.repositories.questions import QuestionRepository
 from app.repositories.rounds import RoundRepository
 from app.repositories.users import UserRepository
-
-
-class DrawState(TypedDict):
-    """Persisted progress through a shuffled question catalog."""
-
-    version: str
-    remaining: list[str]
-    last: str | None
 
 
 class RoundSummary(TypedDict):
@@ -30,40 +21,6 @@ class RoundSummary(TypedDict):
     score: int
     answered: int
     percentage: int
-
-
-def take_questions(
-    catalog: list[str],
-    state: Mapping[str, Any],
-    count: int,
-    rng: random.Random,
-) -> tuple[list[str], DrawState]:
-    """Draw without replacement; retain bounded state across successive rounds."""
-    if (
-        not catalog
-        or len(set(catalog)) != len(catalog)
-        or not 0 <= count <= len(catalog)
-    ):
-        raise ValueError("A unique catalog and a count within its size are required.")
-    version = hashlib.sha256("\n".join(sorted(catalog)).encode()).hexdigest()
-    remaining = (
-        list(state.get("remaining", [])) if state.get("version") == version else []
-    )
-    last = state.get("last")
-    selected: list[str] = []
-    for _ in range(count):
-        if not remaining:
-            remaining = list(catalog)
-            rng.shuffle(remaining)
-            if len(remaining) > 1 and remaining[-1] == last:
-                remaining[0], remaining[-1] = remaining[-1], remaining[0]
-        # Keep questions already selected for a later round.
-        index = next(
-            i for i in range(len(remaining) - 1, -1, -1) if remaining[i] not in selected
-        )
-        last = remaining.pop(index)
-        selected.append(last)
-    return selected, {"version": version, "remaining": remaining, "last": last}
 
 
 def owned_round(round_id: str, user_id: int) -> QuizRound:
@@ -108,19 +65,14 @@ def start_round(user_id: int, category: str | None = None) -> str:
             raise Conflict(
                 f"Servono almeno {ROUND_LENGTH} domande per iniziare un round."
             )
-        topic_bags = dict(user.bag.get("categories", {}))
-        previous_state = topic_bags.get(category, {}) if category else user.bag
+        previous_state = read_state(user.bag, category)
         identities, state = take_questions(
             list(catalog),
             previous_state,
             ROUND_LENGTH,
             random.SystemRandom(),
         )
-        if category:
-            topic_bags[category] = state
-            user.bag = {**user.bag, "categories": topic_bags}
-        else:
-            user.bag = {**user.bag, **state}
+        user.bag = write_state(user.bag, category, state)
         snapshots: list[AnswerSnapshot] = [
             {**catalog[identity], "quiz_category": category} for identity in identities
         ]
