@@ -3,7 +3,7 @@
 import hashlib
 import random
 from collections.abc import Mapping
-from typing import Any, NotRequired, TypedDict, cast
+from typing import Any, TypedDict, cast
 
 
 class DrawState(TypedDict):
@@ -14,10 +14,13 @@ class DrawState(TypedDict):
     last: str | None
 
 
-class UserBag(DrawState):
-    """Global state plus optional per-category state; old bags omit categories."""
+class UserBag(TypedDict, total=False):
+    """A new or category-only bag may not yet have global draw state."""
 
-    categories: NotRequired[dict[str, DrawState]]
+    version: str
+    remaining: list[str]
+    last: str | None
+    categories: dict[str, DrawState]
 
 
 def read_state(bag: Mapping[str, Any], category: str | None) -> Mapping[str, Any]:

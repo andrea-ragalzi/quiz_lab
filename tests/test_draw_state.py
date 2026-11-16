@@ -23,3 +23,8 @@ def test_current_bag_preserves_categories_when_global_state_is_written():
     assert updated == {**next_state, "categories": {"python": topic}}
     assert read_state(updated, "python") == topic
     assert read_state(updated, "nlp") == {}
+
+
+def test_first_category_draw_does_not_create_global_state():
+    state: DrawState = {"version": "v1", "remaining": [], "last": "a"}
+    assert write_state({}, "python", state) == {"categories": {"python": state}}
