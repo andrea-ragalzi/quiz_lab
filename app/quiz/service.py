@@ -9,11 +9,9 @@ from sqlalchemy import func, select, text, update
 from sqlalchemy.engine import CursorResult
 from werkzeug.exceptions import BadRequest, Conflict, NotFound
 
+from app.domain import CATEGORY_LABELS, OPTION_COUNT, ROUND_LENGTH
 from app.extensions import db
 from app.models import Question, QuizAnswer, QuizRound, User, utc_now
-from app.questions import CATEGORY_LABELS
-
-ROUND_LENGTH = 10
 
 
 class DrawState(TypedDict):
@@ -126,7 +124,9 @@ def start_round(user_id: int, category: str | None = None) -> str:
             query = query.where(Question.category.in_(CATEGORY_LABELS))
         catalog = {q.id: q.snapshot() for q in db.session.scalars(query)}
         if len(catalog) < ROUND_LENGTH:
-            raise Conflict("Servono almeno 10 domande per iniziare un round.")
+            raise Conflict(
+                f"Servono almeno {ROUND_LENGTH} domande per iniziare un round."
+            )
         topic_bags = dict(user.bag.get("categories", {}))
         previous_state = topic_bags.get(category, {}) if category else user.bag
         identities, state = take_questions(
@@ -173,7 +173,7 @@ def submit_answer(round_id: str, user_id: int, answer_id: int, option: int) -> N
             raise Conflict(
                 "La risposta è già registrata oppure la domanda non è quella attuale."
             )
-        if type(option) is not int or option not in range(4):
+        if type(option) is not int or option not in range(OPTION_COUNT):
             raise ValueError("Scegli una delle quattro risposte.")
         points = int(option == pending.snapshot["correct_index"])
         claimed = db.session.execute(

@@ -5,9 +5,10 @@ from html.parser import HTMLParser
 import pytest
 from sqlalchemy import select
 
+from app.domain import CATEGORY_LABELS
 from app.extensions import db
 from app.models import QuizAnswer, QuizRound, User
-from app.questions import CATEGORY_LABELS, import_static_questions
+from app.questions import import_static_questions
 from tests.helpers import present
 
 

@@ -7,7 +7,7 @@ from werkzeug.exceptions import (
     RequestEntityTooLarge,
 )
 
-from app.questions import CATEGORY_LABELS
+from app.domain import CATEGORY_LABELS, ROUND_LENGTH
 
 LABELS = {
     **CATEGORY_LABELS,
@@ -85,7 +85,7 @@ SAFE_MESSAGES = {
     "Utente non trovato.",
     "Scegli una delle quattro categorie disponibili.",
     "Completa il round in corso prima di cambiare categoria.",
-    "Servono almeno 10 domande per iniziare un round.",
+    f"Servono almeno {ROUND_LENGTH} domande per iniziare un round.",
     "La risposta è già registrata oppure la domanda non è quella attuale.",
     "Scegli una delle quattro risposte.",
     "Questa risposta è già stata registrata.",

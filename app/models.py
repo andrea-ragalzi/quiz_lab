@@ -9,6 +9,7 @@ from sqlalchemy import CheckConstraint, ForeignKey, Index, UniqueConstraint, tex
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from app.domain import DIFFICULTIES, OPTION_COUNT, ROUND_LENGTH
 from app.extensions import Model, db
 
 
@@ -62,8 +63,13 @@ class Question(Model):
     correct_index: Mapped[int] = mapped_column()
     explanation: Mapped[str] = mapped_column(db.Text)
     __table_args__ = (
-        CheckConstraint("correct_index BETWEEN 0 AND 3", name="correct_range"),
-        CheckConstraint("difficulty IN ('easy', 'medium', 'hard')", name="difficulty"),
+        CheckConstraint(
+            f"correct_index BETWEEN 0 AND {OPTION_COUNT - 1}", name="correct_range"
+        ),
+        CheckConstraint(
+            f"difficulty IN ({', '.join(repr(value) for value in DIFFICULTIES)})",
+            name="difficulty",
+        ),
     )
 
     def snapshot(self) -> QuestionSnapshot:
@@ -113,9 +119,12 @@ class QuizAnswer(Model):
     round: Mapped[QuizRound] = relationship(back_populates="answers")
     __table_args__ = (
         UniqueConstraint("round_id", "position"),
-        CheckConstraint("position BETWEEN 0 AND 9", name="position_range"),
         CheckConstraint(
-            "selected_option IS NULL OR selected_option BETWEEN 0 AND 3",
+            f"position BETWEEN 0 AND {ROUND_LENGTH - 1}", name="position_range"
+        ),
+        CheckConstraint(
+            "selected_option IS NULL OR selected_option BETWEEN 0 AND "
+            f"{OPTION_COUNT - 1}",
             name="option_range",
         ),
         CheckConstraint("awarded_points IN (0, 1)", name="points_range"),

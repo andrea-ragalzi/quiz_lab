@@ -6,11 +6,10 @@ from sqlalchemy import select
 from werkzeug.wrappers import Response
 
 from app.auth.identity import authenticated_user
+from app.domain import CATEGORY_LABELS, OPTION_COUNT, ROUND_LENGTH
 from app.extensions import db
 from app.models import QuizRound
-from app.questions import CATEGORY_LABELS
 from app.quiz.service import (
-    ROUND_LENGTH,
     category_counts,
     owned_round,
     round_category,
@@ -88,7 +87,7 @@ def answer(round_id: str) -> Response:
     owned_round(round_id, user_id)
     option = request.form.get("option", type=int)
     answer_id = request.form.get("answer_id", type=int)
-    if option is None or option not in range(4):
+    if option is None or option not in range(OPTION_COUNT):
         abort(400, "Scegli una delle quattro risposte.")
     if answer_id is None:
         abort(400, "Manca il riferimento alla domanda.")

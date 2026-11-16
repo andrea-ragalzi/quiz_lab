@@ -8,17 +8,12 @@ from urllib.parse import urlsplit
 
 from sqlalchemy.exc import SQLAlchemyError
 
+from app.domain import CATEGORY_LABELS, DIFFICULTIES, OPTION_COUNT
 from app.extensions import db
 from app.models import Question, QuestionSnapshot
 
 STATIC_IT_PATH = Path(__file__).resolve().parent.parent / "data" / "questions_it.json"
-CATEGORY_LABELS = {
-    "python": "Fondamenti di Python",
-    "computer_vision": "Visione artificiale",
-    "nlp": "Elaborazione del linguaggio naturale",
-    "machine_learning": "Apprendimento automatico",
-}
-DIFFICULTIES = {"facile": "easy", "medio": "medium", "difficile": "hard"}
+STATIC_DIFFICULTIES = {"facile": "easy", "medio": "medium", "difficile": "hard"}
 
 
 def validate_question(question: Mapping[str, Any]) -> QuestionSnapshot:
@@ -32,15 +27,15 @@ def validate_question(question: Mapping[str, Any]) -> QuestionSnapshot:
     options = question.get("options")
     if (
         not isinstance(options, list)
-        or len(options) != 4
+        or len(options) != OPTION_COUNT
         or any(not isinstance(item, str) or not item.strip() for item in options)
-        or len({item.strip().casefold() for item in options}) != 4
+        or len({item.strip().casefold() for item in options}) != OPTION_COUNT
     ):
         raise ValueError("Questions need four distinct nonempty options.")
     index = question.get("correct_index")
-    if type(index) is not int or not 0 <= index < 4:
+    if type(index) is not int or not 0 <= index < OPTION_COUNT:
         raise ValueError("The correct option index must be between zero and three.")
-    if question.get("difficulty") not in ("easy", "medium", "hard"):
+    if question.get("difficulty") not in DIFFICULTIES:
         raise ValueError("Unknown difficulty.")
     return {
         "id": question["id"],
@@ -80,7 +75,7 @@ def load_static_questions(path: Path = STATIC_IT_PATH) -> list[QuestionSnapshot]
             raise ValueError("Unknown static question category.")
         if record["category_label"] != CATEGORY_LABELS[record["category"]]:
             raise ValueError("The category label does not match its identifier.")
-        if record["difficulty"] not in DIFFICULTIES:
+        if record["difficulty"] not in STATIC_DIFFICULTIES:
             raise ValueError("Unknown static question difficulty.")
         if "code" not in record or (
             record["code"] is not None and not isinstance(record["code"], str)
@@ -96,7 +91,7 @@ def load_static_questions(path: Path = STATIC_IT_PATH) -> list[QuestionSnapshot]
         candidate = {
             "id": record["id"],
             "category": record["category"],
-            "difficulty": DIFFICULTIES[record["difficulty"]],
+            "difficulty": STATIC_DIFFICULTIES[record["difficulty"]],
             "text": "\n\n".join(
                 filter(
                     None,
