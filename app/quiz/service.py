@@ -5,13 +5,15 @@ import random
 from collections.abc import Mapping
 from typing import Any, TypedDict
 
-from sqlalchemy import func, select, text, update
-from sqlalchemy.engine import CursorResult
+from sqlalchemy import text
 from werkzeug.exceptions import BadRequest, Conflict, NotFound
 
 from app.domain import CATEGORY_LABELS, OPTION_COUNT, ROUND_LENGTH
 from app.extensions import db
-from app.models import Question, QuizAnswer, QuizRound, User, utc_now
+from app.models import AnswerSnapshot, QuizRound, utc_now
+from app.repositories.questions import QuestionRepository
+from app.repositories.rounds import RoundRepository
+from app.repositories.users import UserRepository
 
 
 class DrawState(TypedDict):
@@ -65,12 +67,7 @@ def take_questions(
 
 
 def owned_round(round_id: str, user_id: int) -> QuizRound:
-    round_ = db.session.scalar(
-        select(QuizRound).where(
-            QuizRound.id == round_id,
-            QuizRound.user_id == user_id,
-        )
-    )
+    round_ = RoundRepository(db.session).owned(round_id, user_id)
     if round_ is None:
         raise NotFound("Round non trovato.")
     return round_
@@ -87,13 +84,7 @@ def round_category(round_: QuizRound) -> str | None:
 
 
 def category_counts() -> dict[str, int]:
-    return dict(
-        db.session.execute(
-            select(Question.category, func.count(Question.id))
-            .where(Question.category.in_(CATEGORY_LABELS))
-            .group_by(Question.category)
-        ).all()
-    )
+    return QuestionRepository(db.session).counts_by_category()
 
 
 def start_round(user_id: int, category: str | None = None) -> str:
@@ -102,27 +93,17 @@ def start_round(user_id: int, category: str | None = None) -> str:
     db.session.rollback()
     with db.session.begin():
         db.session.execute(text("BEGIN IMMEDIATE"))
-        active = db.session.scalar(
-            select(QuizRound).where(
-                QuizRound.user_id == user_id,
-                QuizRound.completed_at.is_(None),
-            )
-        )
+        active = RoundRepository(db.session).active_for(user_id)
         if active:
             if category is not None and round_category(active) != category:
                 raise Conflict(
                     "Completa il round in corso prima di cambiare categoria."
                 )
             return active.id
-        user = db.session.get(User, user_id)
+        user = UserRepository(db.session).get(user_id)
         if user is None:
             raise NotFound("Utente non trovato.")
-        query = select(Question)
-        if category is not None:
-            query = query.where(Question.category == category)
-        else:
-            query = query.where(Question.category.in_(CATEGORY_LABELS))
-        catalog = {q.id: q.snapshot() for q in db.session.scalars(query)}
+        catalog = QuestionRepository(db.session).catalog(category)
         if len(catalog) < ROUND_LENGTH:
             raise Conflict(
                 f"Servono almeno {ROUND_LENGTH} domande per iniziare un round."
@@ -140,17 +121,10 @@ def start_round(user_id: int, category: str | None = None) -> str:
             user.bag = {**user.bag, "categories": topic_bags}
         else:
             user.bag = {**user.bag, **state}
-        round_ = QuizRound(user_id=user_id)
-        db.session.add(round_)
-        db.session.flush()
-        for position, identity in enumerate(identities):
-            db.session.add(
-                QuizAnswer(
-                    round_id=round_.id,
-                    position=position,
-                    snapshot={**catalog[identity], "quiz_category": category},
-                )
-            )
+        snapshots: list[AnswerSnapshot] = [
+            {**catalog[identity], "quiz_category": category} for identity in identities
+        ]
+        round_ = RoundRepository(db.session).create(user_id, snapshots)
         return round_.id
 
 
@@ -161,14 +135,8 @@ def submit_answer(round_id: str, user_id: int, answer_id: int, option: int) -> N
         # Acquire the write lock before reading the current answer.
         db.session.execute(text("BEGIN IMMEDIATE"))
         round_ = owned_round(round_id, user_id)
-        pending = db.session.scalar(
-            select(QuizAnswer)
-            .where(
-                QuizAnswer.round_id == round_id,
-                QuizAnswer.selected_option.is_(None),
-            )
-            .order_by(QuizAnswer.position)
-        )
+        rounds = RoundRepository(db.session)
+        pending = rounds.pending_answer(round_id)
         if round_.completed_at or pending is None or pending.id != answer_id:
             raise Conflict(
                 "La risposta è già registrata oppure la domanda non è quella attuale."
@@ -176,27 +144,9 @@ def submit_answer(round_id: str, user_id: int, answer_id: int, option: int) -> N
         if type(option) is not int or option not in range(OPTION_COUNT):
             raise ValueError("Scegli una delle quattro risposte.")
         points = int(option == pending.snapshot["correct_index"])
-        claimed = db.session.execute(
-            update(QuizAnswer)
-            .where(
-                QuizAnswer.id == answer_id,
-                QuizAnswer.selected_option.is_(None),
-            )
-            .values(selected_option=option, awarded_points=points)
-        )
-        # DML executes through a cursor, but ``Session.execute()`` is annotated
-        # with the base ``Result`` type, which has no ``rowcount``.
-        if not isinstance(claimed, CursorResult):
-            raise TypeError("UPDATE did not return a cursor result.")
-        if claimed.rowcount != 1:
+        if not rounds.claim_answer(answer_id, option, points):
             raise Conflict("Questa risposta è già stata registrata.")
-        db.session.execute(
-            update(User)
-            .where(User.id == user_id)
-            .values(
-                total_score=User.total_score + points,
-            )
-        )
+        UserRepository(db.session).add_points(user_id, points)
         if pending.position == ROUND_LENGTH - 1:
             round_.completed_at = utc_now()
 

@@ -73,10 +73,15 @@ def create_app(config: Mapping[str, Any] | None = None) -> Flask:
     app.jinja_env.filters["italian"] = italian
 
     from app.models import User
+    from app.repositories.users import UserRepository
 
     @login_manager.user_loader
     def load_user(user_id: str) -> User | None:
-        return db.session.get(User, int(user_id)) if user_id.isdecimal() else None
+        return (
+            UserRepository(db.session).get(int(user_id))
+            if user_id.isdecimal()
+            else None
+        )
 
     from app.auth.routes import bp as auth
     from app.leaderboard.routes import bp as leaderboard

@@ -10,7 +10,8 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from app.domain import CATEGORY_LABELS, DIFFICULTIES, OPTION_COUNT
 from app.extensions import db
-from app.models import Question, QuestionSnapshot
+from app.models import QuestionSnapshot
+from app.repositories.questions import QuestionRepository
 
 STATIC_IT_PATH = Path(__file__).resolve().parent.parent / "data" / "questions_it.json"
 STATIC_DIFFICULTIES = {"facile": "easy", "medio": "medium", "difficile": "hard"}
@@ -113,8 +114,7 @@ def import_static_questions(path: Path = STATIC_IT_PATH) -> int:
     """Upsert an entirely validated archive atomically, preserving round snapshots."""
     questions = load_static_questions(path)
     try:
-        for question in questions:
-            db.session.merge(Question(**question))
+        QuestionRepository(db.session).upsert_many(questions)
         db.session.commit()
     except SQLAlchemyError:
         db.session.rollback()
