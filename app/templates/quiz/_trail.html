@@ -1,0 +1,26 @@
+{# Ten-step trail. Decorative: callers always render the same facts as text. #}
+{% macro trail(answers, current_id=None) %}
+  <ol class="trail" aria-hidden="true">
+    {% for answer in answers %}
+      {% set done = answer.selected_option is not none %}
+      <li class="trail-step{% if done %} {{ 'is-correct' if answer.awarded_points else 'is-wrong' }}{% endif %}{% if answer.id == current_id %} is-current{% endif %}">
+        {% if done %}
+          <svg class="icon" focusable="false">
+            <use href="#i-{{ 'check' if answer.awarded_points else 'x' }}"></use>
+          </svg>
+        {% else %}
+          {{ loop.index }}
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ol>
+{% endmacro %}
+{% macro question_body(layout) %}
+  {% for part in layout.parts %}
+    {% if part.kind == "code" %}
+      <pre class="code-block"><code>{{ part.content }}</code></pre>
+    {% else %}
+      <p class="question-hint">{{ part.content }}</p>
+    {% endif %}
+  {% endfor %}
+{% endmacro %}

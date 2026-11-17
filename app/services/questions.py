@@ -8,12 +8,12 @@ from urllib.parse import urlsplit
 
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.domain import CATEGORY_LABELS, DIFFICULTIES, OPTION_COUNT
-from app.extensions import db
-from app.models import QuestionSnapshot
+from app.core.extensions import db
+from app.domain.constants import CATEGORY_LABELS, DIFFICULTIES, OPTION_COUNT
+from app.domain.models import QuestionSnapshot
 from app.repositories.questions import QuestionRepository
 
-STATIC_IT_PATH = Path(__file__).resolve().parent.parent / "data" / "questions_it.json"
+STATIC_IT_PATH = Path(__file__).resolve().parents[2] / "data" / "questions_it.json"
 STATIC_DIFFICULTIES = {"facile": "easy", "medio": "medium", "difficile": "hard"}
 
 

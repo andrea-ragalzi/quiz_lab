@@ -1,6 +1,6 @@
 import random
 
-from app.quiz.draw_state import take_questions
+from app.domain.draw_state import take_questions
 
 
 def test_shuffle_bag_exhausts_before_refilling_and_avoids_boundary_repeat():

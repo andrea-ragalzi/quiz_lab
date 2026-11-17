@@ -12,12 +12,12 @@ import pytest
 from sqlalchemy import select
 from test_weather import FIRST_DAY, GEO, WEATHER, fake_response
 
-from app.extensions import db
-from app.models import QuizAnswer, User
-from app.questions import STATIC_IT_PATH
-from app.quiz.draw_state import take_questions
-from app.security import JsonFormatter
-from app.weather.service import WeatherService, transform_days
+from app.core.extensions import db
+from app.core.security import JsonFormatter
+from app.domain.draw_state import take_questions
+from app.domain.models import QuizAnswer, User
+from app.services.questions import STATIC_IT_PATH
+from app.services.weather import WeatherService, transform_days
 from tests.helpers import present
 
 
@@ -135,7 +135,7 @@ def test_weather_table_and_matching_icon(app, client):
 
 
 def test_weather_cache_expires_at_city_midnight(monkeypatch):
-    import app.weather.service as service
+    import app.services.weather as service
 
     clock = Mock(wraps=datetime)
     midnight = datetime.combine(
@@ -186,14 +186,14 @@ def test_json_logs_tolerate_exc_info_without_active_exception():
 def test_authenticated_user_rejects_anonymous_requests(app):
     from werkzeug.exceptions import Unauthorized
 
-    from app.auth.identity import authenticated_user
+    from app.web.identity import authenticated_user
 
     with app.test_request_context(), pytest.raises(Unauthorized):
         authenticated_user()
 
 
 def test_validated_text_requires_validated_field_data(app):
-    from app.auth.forms import LoginForm, validated_text
+    from app.web.forms import LoginForm, validated_text
 
     with app.test_request_context():
         form = LoginForm(data={"username": "learner"})
@@ -254,7 +254,7 @@ def test_complete_italian_journey_replay_and_cumulative_score(app, client):
 
 
 def test_weather_ttl_expiry_and_traceback(monkeypatch, caplog):
-    import app.weather.service as service
+    import app.services.weather as service
 
     timer = Mock(return_value=0)
     monkeypatch.setattr(service, "monotonic", timer)
@@ -312,7 +312,7 @@ def test_default_mode_and_cli_wsgi_startup(tmp_path, monkeypatch):
         assert result.exit_code == 0, result.output
     assert application.test_client().get("/").status_code == 200
     with application.app_context():
-        from app.models import Question
+        from app.domain.models import Question
 
         assert len(db.session.scalars(select(Question)).all()) == 100
         db.session.remove()

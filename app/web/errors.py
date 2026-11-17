@@ -3,8 +3,8 @@
 from flask import Flask, render_template
 from werkzeug.exceptions import HTTPException
 
-from app.extensions import db
-from app.presentation import SAFE_MESSAGES, italian
+from app.core.extensions import db
+from app.web.presentation import SAFE_MESSAGES, italian
 
 
 def register(app: Flask) -> None:

@@ -9,9 +9,9 @@ from sqlalchemy import CheckConstraint, ForeignKey, Index, UniqueConstraint, tex
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from app.domain import DIFFICULTIES, OPTION_COUNT, ROUND_LENGTH
-from app.extensions import Model, db
-from app.quiz.draw_state import UserBag
+from app.core.extensions import Model, db
+from app.domain.constants import DIFFICULTIES, OPTION_COUNT, ROUND_LENGTH
+from app.domain.draw_state import UserBag
 
 
 class QuestionSnapshot(TypedDict):

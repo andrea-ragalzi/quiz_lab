@@ -4,13 +4,13 @@ from flask import Blueprint, flash, redirect, render_template, session, url_for
 from flask_login import current_user, login_required, logout_user
 from werkzeug.wrappers import Response
 
-from app.auth.forms import LoginForm, RegistrationForm, validated_text
-from app.auth.service import (
+from app.services.auth import (
     DuplicateIdentity,
     authenticate,
     register_user,
     start_session,
 )
+from app.web.forms import LoginForm, RegistrationForm, validated_text
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 

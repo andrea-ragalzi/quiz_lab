@@ -4,7 +4,7 @@ from unittest.mock import Mock
 import pytest
 import requests
 
-from app.weather.service import WeatherError, WeatherService
+from app.services.weather import WeatherError, WeatherService
 
 GEO = {
     "results": [
@@ -113,7 +113,7 @@ def test_hourly_temperatures_cover_day_and_following_night_across_dst():
     from datetime import UTC, date, datetime, timedelta
     from zoneinfo import ZoneInfo
 
-    from app.weather.service import transform_days
+    from app.services.weather import transform_days
 
     zone = ZoneInfo("Europe/Rome")
     start = datetime(2026, 3, 27, 23, tzinfo=UTC)
@@ -142,7 +142,7 @@ def test_hourly_temperatures_cover_day_and_following_night_across_dst():
 def test_missing_hourly_readings_are_rejected():
     from datetime import date
 
-    from app.weather.service import transform_days
+    from app.services.weather import transform_days
 
     with pytest.raises(ValueError):
         transform_days(
@@ -157,7 +157,7 @@ def test_missing_hourly_readings_are_rejected():
 def test_half_hour_dst_transition_uses_hourly_readings():
     from datetime import date
 
-    from app.weather.service import transform_days
+    from app.services.weather import transform_days
 
     start = datetime(2026, 10, 2, 13, 30, tzinfo=UTC)
     times = [start + timedelta(hours=i) for i in range(100)]

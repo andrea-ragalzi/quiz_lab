@@ -5,7 +5,7 @@ from sqlalchemy import select, update
 from sqlalchemy.engine import CursorResult
 from sqlalchemy.orm import Session, scoped_session
 
-from app.models import AnswerSnapshot, QuizAnswer, QuizRound
+from app.domain.models import AnswerSnapshot, QuizAnswer, QuizRound
 
 
 class RoundRepository:

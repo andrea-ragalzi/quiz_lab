@@ -3,7 +3,7 @@
 from flask import abort
 from flask_sqlalchemy.pagination import Pagination
 
-from app.extensions import db
+from app.core.extensions import db
 from app.repositories.users import UserRepository
 
 

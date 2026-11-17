@@ -4,7 +4,7 @@ from flask_sqlalchemy.session import Session as FlaskSession
 from sqlalchemy import select, update
 from sqlalchemy.orm import Session, scoped_session
 
-from app.models import User
+from app.domain.models import User
 
 
 class UserRepository:

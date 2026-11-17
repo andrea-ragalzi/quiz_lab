@@ -2,7 +2,7 @@
 
 from flask import Blueprint, render_template, request
 
-from app.leaderboard.service import ranking_page
+from app.services.leaderboard import ranking_page
 
 bp = Blueprint("leaderboard", __name__, url_prefix="/leaderboard")
 

@@ -221,10 +221,10 @@ SQLite is intended for modest usage.
 
 ## Project structure
 
-- `app/__init__.py` composes configuration, extensions, blueprints and registrations.
-- `app/domain.py` defines shared quiz constants; `app/models.py` defines the database schema.
-- `app/*/routes.py` handle HTTP requests and delegate application behavior to services.
-- `app/auth/service.py`, `app/quiz/service.py` and `app/leaderboard/service.py` contain application rules and transaction boundaries; `app/quiz/draw_state.py` manages persisted question draws.
+- `app/__init__.py` creates the application and registers its components.
+- `app/routers/` contains Flask blueprints and HTTP request handling.
+- `app/services/` contains application rules, transaction boundaries, question import and weather integration.
 - `app/repositories/` contains database queries and writes without committing transactions.
-- `app/questions.py` validates and imports the question archive; `app/cli.py` registers database commands.
-- `app/errors.py`, `app/security.py` and `app/presentation.py` provide error handling, security configuration and display labels.
+- `app/domain/` contains quiz constants, models and question-draw state.
+- `app/core/` contains configuration, extensions, security and CLI registration.
+- `app/web/` contains forms, authentication helpers, error handling and presentation labels.

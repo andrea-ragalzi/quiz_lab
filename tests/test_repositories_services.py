@@ -2,13 +2,13 @@ import pytest
 from sqlalchemy import select
 
 from app import create_app
-from app.auth.service import DuplicateIdentity, authenticate, register_user
-from app.extensions import db
-from app.models import AnswerSnapshot, Question, QuizAnswer, QuizRound, User
-from app.quiz.service import current_slot
+from app.core.extensions import db
+from app.domain.models import AnswerSnapshot, Question, QuizAnswer, QuizRound, User
 from app.repositories.questions import QuestionRepository
 from app.repositories.rounds import RoundRepository
 from app.repositories.users import UserRepository
+from app.services.auth import DuplicateIdentity, authenticate, register_user
+from app.services.quiz import current_slot
 
 
 @pytest.fixture

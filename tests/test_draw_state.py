@@ -1,4 +1,4 @@
-from app.quiz.draw_state import DrawState, read_state, write_state
+from app.domain.draw_state import DrawState, read_state, write_state
 
 
 def test_legacy_bag_retains_global_state_when_category_is_written():

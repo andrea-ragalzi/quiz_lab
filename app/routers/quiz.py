@@ -4,9 +4,8 @@ from flask import Blueprint, abort, redirect, render_template, request, url_for
 from flask_login import login_required
 from werkzeug.wrappers import Response
 
-from app.auth.identity import authenticated_user
-from app.domain import OPTION_COUNT
-from app.quiz.service import (
+from app.domain.constants import OPTION_COUNT
+from app.services.quiz import (
     completed_round,
     current_slot,
     owned_round,
@@ -16,6 +15,7 @@ from app.quiz.service import (
     start_round,
     submit_answer,
 )
+from app.web.identity import authenticated_user
 
 bp = Blueprint("quiz", __name__, url_prefix="/quiz")
 

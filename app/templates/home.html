@@ -3,121 +3,151 @@
   <div class="container">
     <section class="hero" aria-labelledby="hero-title">
       <div>
-        <div class="eyebrow"><span class="dot"></span> ALLENA LA TUA CURIOSITÀ</div>
-        <h1 id="hero-title">
-          Impara Python.
-          <br>
-          <span class="highlight">Gioca e migliora.</span>
-        </h1>
-        <p>Metti alla prova le tue conoscenze di Python e intelligenza artificiale.</p>
-        <div class="hero-actions"><a class="btn btn-primary btn-large" href="{{ url_for('quiz.index') }}">Inizia a giocare ↗</a><a class="btn btn-outline btn-large"
-                                                                                                                                   href="{{ url_for('leaderboard.index') }}">Scopri la classifica →</a></div>
-      </div>
-      <div class="hero-visual">
-        <div class="orbit-bg">{% include "forest.html" %}</div><div class="orbit-small" aria-hidden="true"></div><div class="orbit-x" aria-hidden="true">✳</div><div class="orbit-plus" aria-hidden="true">✦</div>
-        <section class="weather-card" aria-labelledby="weather-title">
-          <div class="weather-top">
-            <div>
-              <div class="small-muted">IL METEO DELLA TUA CITTÀ</div>
-              <h2 class="weather-head"
-                  id="weather-title">{{ forecast.city if forecast else 'Uno sguardo al meteo' }}</h2>
-            </div>
-            <div class="weather-icon" aria-hidden="true">{{ forecast.days[0].icon if forecast else '🌤' }}</div>
-          </div>
-          {% if forecast %}
-            <div class="weather-main">
-              <div>
-                <div class="temperature">{{ forecast.days[0].maximum|round|int }}<sup>°C</sup></div>
-                <div class="weather-desc">Massima diurna · {{ forecast.days[0].condition|italian }}</div>
-              </div>
-              <div class="weather-sun" aria-hidden="true">{{ forecast.days[0].icon }}</div>
-            </div>
-            <div class="forecast-scroll"
-                 role="region"
-                 aria-label="Previsioni meteo"
-                 tabindex="0">
-              <table class="forecast-table">
-                <caption>Previsioni per oggi, domani e dopodomani. Giorno: 06–18; notte: 18–06 del giorno successivo, ora locale.</caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Giorno e data</th>
-                    <th scope="col">Condizioni</th>
-                    <th scope="col">Massima diurna</th>
-                    <th scope="col">Minima notturna</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for day in forecast.days %}
-                    <tr>
-                      <th scope="row">
-                        {{ ['Oggi', 'Domani', 'Dopodomani'][loop.index0] }} · {{ day.name }}
-                        <br>
-                        <time datetime="{{ day.date }}">{{ day.display_date }}</time>
-                      </th>
-                      <td><span aria-hidden="true">{{ day.icon }}</span> {{ day.condition|italian }}</td>
-                      <td>{{ day.maximum }} °C</td>
-                      <td>{{ day.minimum }} °C</td>
-                    </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
+        <h1 class="hero-title" id="hero-title">Dieci domande. Un sentiero tutto tuo.</h1>
+        <p class="hero-lead">
+          Metti alla prova le tue conoscenze di Python e intelligenza artificiale. Dopo ogni risposta scopri il perché.
+        </p>
+        <div class="hero-actions">
+          {% if current_user.is_authenticated %}
+            <a class="btn btn-primary btn-large" href="{{ url_for('quiz.index') }}">Inizia a giocare
+              <svg class="icon" aria-hidden="true" focusable="false">
+                <use href="#i-arrow"></use>
+              </svg>
+            </a>
           {% else %}
-            <div class="weather-main">
-              <p class="weather-intro">
-                Una pausa dallo studio?
-                <br>
-                Cerca una città e scopri le previsioni per tre giorni.
-              </p>
-              <div class="weather-sun" aria-hidden="true">🌤</div>
-            </div>
+            <a class="btn btn-primary btn-large"
+               href="{{ url_for('auth.register') }}">Crea un account e gioca
+              <svg class="icon" aria-hidden="true" focusable="false">
+                <use href="#i-arrow"></use>
+              </svg>
+            </a>
           {% endif %}
-          <form class="weather-search"
-                method="get"
-                action="{{ url_for('weather.search') }}">
-            <div class="weather-input"><label for="city">Nome della città</label><input id="city"
-                                                                                        name="city"
-                                                                                        value="{{ city }}"
-                                                                                        placeholder="Es. Roma"
-                                                                                        autocomplete="address-level2"
-                                                                                        minlength="2"
-                                                                                        maxlength="80"
-                                                                                        required
-                                                                                        {% if weather_error %}aria-describedby="weather-error" aria-invalid="true"{% endif %}></div><button type="submit">Cerca</button>
-          </form>
-          {% if weather_error %}<p class="form-error"
-                                   id="weather-error"
-                                   role="alert">{{ weather_error|italian }}</p>{% endif %}
-          <p class="weather-credit">Meteo di <a href="https://open-meteo.com/">Open-Meteo</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
-        </section>
-        <div class="float-card">
-          <div class="float-icon" aria-hidden="true">⚡</div>
-          <div>
-            Scegli una categoria
-            <div class="small-muted">Dieci domande per round</div>
-          </div>
+          <a class="btn btn-secondary btn-large"
+             href="{{ url_for('leaderboard.index') }}">Scopri la classifica</a>
         </div>
       </div>
+      <div class="hero-art">{% include "partials/trail_art.html" %}</div>
     </section>
-    <section class="section" aria-labelledby="topics-title">
-      <div class="section-head">
+    <ol class="steps" aria-label="Come funziona">
+      <li class="step">
+        <span class="step-number" aria-hidden="true">1</span>
         <div>
-          <div class="eyebrow"><span class="dot"></span> ESPLORA LE POSSIBILITÀ</div>
-          <h2 id="topics-title">Che cosa scoprirai oggi?</h2>
-          <p class="section-desc">Scegli un argomento e inizia a giocare.</p>
+          <strong>Scegli un argomento</strong>
+          <p>Python, immagini, linguaggio o dati: oppure tutti insieme.</p>
         </div>
-      </div>
-      <div class="topic-grid">
-        {% for category, icon, title, description in [('python','⌘','Fondamenti di Python','Allena la tua logica di programmazione.'), ('computer_vision','◉','Visione artificiale','Scopri come i computer analizzano le immagini.'), ('nlp','Aa','Linguaggio e NLP','Esplora come i modelli elaborano le parole.'), ('machine_learning','✧','Apprendimento automatico','Dai dati alle previsioni.')] %}
-          <a class="topic-card home-topic-card"
+      </li>
+      <li class="step">
+        <span class="step-number" aria-hidden="true">2</span>
+        <div>
+          <strong>Rispondi a dieci domande</strong>
+          <p>Ogni risposta giusta vale un punto.</p>
+        </div>
+      </li>
+      <li class="step">
+        <span class="step-number" aria-hidden="true">3</span>
+        <div>
+          <strong>Scopri il perché</strong>
+          <p>Una spiegazione breve ti aiuta a ricordare.</p>
+        </div>
+      </li>
+    </ol>
+    <section class="home-section" aria-labelledby="topics-title">
+      <h2 class="section-title" id="topics-title">Che cosa scoprirai oggi?</h2>
+      <p class="section-lead">Scegli un argomento e inizia a giocare.</p>
+      <div class="topics">
+        {% for category, icon, title, description in [('python', 'code', 'Fondamenti di Python', 'Allena la tua logica di programmazione.'), ('computer_vision', 'eye', 'Visione artificiale', 'Scopri come i computer analizzano le immagini.'), ('nlp', 'chat', 'Linguaggio e NLP', 'Esplora come i modelli elaborano le parole.'), ('machine_learning', 'chart', 'Apprendimento automatico', 'Dai dati alle previsioni.')] %}
+          <a class="topic topic-{{ category|replace('_', '-') }}"
              href="{{ url_for('quiz.index', category=category) }}">
-            <div class="topic-icon" aria-hidden="true">{{ icon }}</div>
+            <span class="topic-icon" aria-hidden="true">
+              <svg class="icon" focusable="false">
+                <use href="#i-{{ icon }}"></use>
+              </svg>
+            </span>
             <h3>{{ title }}</h3>
             <p>{{ description }}</p>
-            <div class="topic-foot"><span>Scegli questa categoria</span><span class="arrow"
-                                                                              aria-hidden="true">↗</span></div>
+            <span class="topic-go" aria-hidden="true">Gioca
+              <svg class="icon" focusable="false">
+                <use href="#i-arrow"></use>
+              </svg>
+            </span>
           </a>
         {% endfor %}
+      </div>
+    </section>
+    <section class="home-section weather"
+             id="meteo"
+             aria-labelledby="weather-title">
+      <div class="weather-intro">
+        <h2 class="section-title" id="weather-title">Una pausa dallo studio?</h2>
+        <p>Cerca una città e scopri le previsioni per oggi, domani e dopodomani.</p>
+      </div>
+      <div class="weather-card">
+        {% if forecast %}
+          <div class="weather-now">
+            <div class="weather-icon" aria-hidden="true">{{ forecast.days[0].icon }}</div>
+            <div>
+              <h3 class="weather-city">{{ forecast.city }}</h3>
+              <p class="weather-temp">
+                <strong>{{ forecast.days[0].maximum|round|int }} °C</strong> massima diurna · {{ forecast.days[0].condition|italian }}
+              </p>
+            </div>
+          </div>
+          <div class="forecast-scroll"
+               role="region"
+               aria-label="Previsioni meteo"
+               tabindex="0">
+            <table class="forecast-table">
+              <caption>Previsioni per oggi, domani e dopodomani. Giorno: 06–18; notte: 18–06 del giorno successivo, ora locale.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Giorno e data</th>
+                  <th scope="col">Condizioni</th>
+                  <th scope="col">Massima diurna</th>
+                  <th scope="col">Minima notturna</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for day in forecast.days %}
+                  <tr>
+                    <th scope="row">
+                      {{ ['Oggi', 'Domani', 'Dopodomani'][loop.index0] }} · {{ day.name }}
+                      <br>
+                      <time datetime="{{ day.date }}">{{ day.display_date }}</time>
+                    </th>
+                    <td>
+                      <span aria-hidden="true">{{ day.icon }}</span> {{ day.condition|italian }}
+                    </td>
+                    <td>{{ day.maximum }} °C</td>
+                    <td>{{ day.minimum }} °C</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% endif %}
+        <form class="inline-form"
+              method="get"
+              action="{{ url_for('weather.search') }}#meteo">
+          <div class="form-field">
+            <label for="city">Nome della città</label>
+            <input id="city"
+                   name="city"
+                   value="{{ city }}"
+                   placeholder="Es. Roma"
+                   autocomplete="address-level2"
+                   minlength="2"
+                   maxlength="80"
+                   required
+                   {% if weather_error %}aria-describedby="weather-error" aria-invalid="true"{% endif %}>
+          </div>
+          <button class="btn btn-secondary" type="submit">Cerca</button>
+        </form>
+        {% if weather_error %}
+          <p class="form-error" id="weather-error" role="alert">{{ weather_error|italian }}</p>
+        {% endif %}
+        <p class="weather-credit">
+          Meteo di <a href="https://open-meteo.com/">Open-Meteo</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+        </p>
       </div>
     </section>
   </div>

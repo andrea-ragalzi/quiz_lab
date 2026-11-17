@@ -4,8 +4,8 @@ from flask_sqlalchemy.session import Session as FlaskSession
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session, scoped_session
 
-from app.domain import CATEGORY_LABELS
-from app.models import Question, QuestionSnapshot
+from app.domain.constants import CATEGORY_LABELS
+from app.domain.models import Question, QuestionSnapshot
 
 
 class QuestionRepository:

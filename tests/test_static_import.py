@@ -7,10 +7,10 @@ from pathlib import Path
 import pytest
 from sqlalchemy import select
 
-from app.extensions import db
-from app.models import Question, QuizAnswer, QuizRound, User
-from app.questions import import_static_questions
-from app.quiz.service import start_round, submit_answer
+from app.core.extensions import db
+from app.domain.models import Question, QuizAnswer, QuizRound, User
+from app.services.questions import import_static_questions
+from app.services.quiz import start_round, submit_answer
 from tests.helpers import present
 
 ARCHIVE = Path(__file__).resolve().parents[1] / "data" / "questions_it.json"
@@ -164,7 +164,14 @@ def test_static_mode_uses_only_imported_questions_and_hides_explanations(app):
     page = client.get(f"/quiz/{round_id}").get_data(as_text=True)
     from markupsafe import escape
 
-    assert str(escape(question_text)) in page
+    from app.web.presentation import question_layout
+
+    # The page shows every paragraph of the stored question (heading, hints,
+    # code) verbatim, split only into prose and code blocks.
+    layout = question_layout(question_text)
+    assert layout.prompt is not None
+    for content in (layout.prompt, *(part.content for part in layout.parts)):
+        assert str(escape(content)) in page
     assert str(escape(explanation)) not in page
     after = client.post(
         f"/quiz/{round_id}/answer",
@@ -186,7 +193,7 @@ def test_frontend_declares_italian_language(client, route):
 
 
 def test_static_description_is_only_in_explanation():
-    from app.questions import load_static_questions
+    from app.services.questions import load_static_questions
 
     records = json.loads(ARCHIVE.read_text(encoding="utf-8"))
     questions = load_static_questions(ARCHIVE)

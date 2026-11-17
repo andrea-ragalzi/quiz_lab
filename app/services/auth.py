@@ -4,8 +4,8 @@ from flask import session
 from flask_login import login_user
 from sqlalchemy.exc import IntegrityError
 
-from app.extensions import db
-from app.models import User
+from app.core.extensions import db
+from app.domain.models import User
 from app.repositories.users import UserRepository
 
 

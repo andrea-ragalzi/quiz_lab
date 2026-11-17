@@ -85,4 +85,4 @@ build-backend = "setuptools.build_meta"
 include = ["app*"]
 
 [tool.setuptools.package-data]
-app = ["templates/*.html", "templates/auth/*.html", "templates/quiz/*.html", "static/css/*.css", "static/js/*.js"]
+app = ["templates/*.html", "templates/auth/*.html", "templates/quiz/*.html", "templates/partials/*.html", "static/css/*.css", "static/js/*.js", "static/fonts/*.woff2", "static/fonts/*.txt"]

@@ -6,9 +6,9 @@ from sqlalchemy import delete, select
 from sqlalchemy.exc import IntegrityError
 from werkzeug.exceptions import Conflict
 
-from app.extensions import db
-from app.models import Question, QuizAnswer, QuizRound, User
-from app.quiz.service import start_round, submit_answer
+from app.core.extensions import db
+from app.domain.models import Question, QuizAnswer, QuizRound, User
+from app.services.quiz import start_round, submit_answer
 from tests.helpers import present
 
 
@@ -102,7 +102,7 @@ def test_database_enforces_foreign_keys_unique_slots_and_score_ranges(app, playe
 
 
 def test_bank_is_original_sized_and_seeding_is_idempotent(app):
-    from app.questions import import_static_questions, load_static_questions
+    from app.services.questions import import_static_questions, load_static_questions
 
     questions = load_static_questions()
     assert 80 <= len(questions) <= 120
@@ -126,9 +126,8 @@ def test_leaderboard_orders_points_then_nickname(app, client):
             db.session.add(user)
         db.session.commit()
     text = client.get("/leaderboard/").get_data(as_text=True)
-    assert (
-        text.index("Leader</h2>") < text.index("Alpha</h2>") < text.index("Zebra</h2>")
-    )
+    table = text.split('class="rank-table"', 1)[1]
+    assert table.index("Leader") < table.index("Alpha") < table.index("Zebra")
 
 
 def test_successive_rounds_preserve_bag_history_without_repeating(app, player):

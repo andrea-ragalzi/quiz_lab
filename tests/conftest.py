@@ -1,7 +1,7 @@
 import pytest
 
 from app import create_app
-from app.extensions import db
+from app.core.extensions import db
 
 
 @pytest.fixture
@@ -16,7 +16,7 @@ def app(tmp_path):
     )
     with application.app_context():
         db.create_all()
-        from app.questions import import_static_questions
+        from app.services.questions import import_static_questions
 
         import_static_questions()
     yield application

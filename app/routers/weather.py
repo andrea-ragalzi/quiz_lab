@@ -2,7 +2,7 @@
 
 from flask import Blueprint, current_app, render_template, request
 
-from app.weather.service import Forecast, WeatherError, WeatherService
+from app.services.weather import Forecast, WeatherError, WeatherService
 
 bp = Blueprint("weather", __name__, url_prefix="/weather")
 

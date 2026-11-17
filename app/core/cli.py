@@ -5,7 +5,7 @@ from pathlib import Path
 import click
 from flask import Flask
 
-from app.extensions import db
+from app.core.extensions import db
 
 
 def register(app: Flask) -> None:
@@ -18,7 +18,7 @@ def register(app: Flask) -> None:
     @app.cli.command("seed-questions")
     def seed() -> None:
         """Validate and import the configured question bank idempotently."""
-        from app.questions import import_static_questions
+        from app.services.questions import import_static_questions
 
         count = import_static_questions()
         click.echo(f"Question bank ready: {count} questions.")
@@ -26,7 +26,7 @@ def register(app: Flask) -> None:
     @app.cli.command("validate-questions")
     def validate() -> None:
         """Validate the bank without changing the database."""
-        from app.questions import load_static_questions
+        from app.services.questions import load_static_questions
 
         questions = load_static_questions()
         click.echo(f"Validated {len(questions)} questions.")
@@ -39,7 +39,7 @@ def register(app: Flask) -> None:
     )
     def import_static(path: Path | None) -> None:
         """Import the Italian static archive without resetting existing player data."""
-        from app.questions import STATIC_IT_PATH, import_static_questions
+        from app.services.questions import STATIC_IT_PATH, import_static_questions
 
         try:
             count = import_static_questions(path or STATIC_IT_PATH)

@@ -3,7 +3,7 @@
 from flask_login import current_user
 from werkzeug.exceptions import Unauthorized
 
-from app.models import User
+from app.domain.models import User
 
 
 def authenticated_user() -> User:

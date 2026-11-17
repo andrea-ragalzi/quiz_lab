@@ -6,9 +6,10 @@ from typing import Any
 
 from flask import Flask
 
-from app import cli, errors, security
-from app.config import configuration
-from app.extensions import csrf, db, login_manager
+from app.core import cli, security
+from app.core.config import configuration
+from app.core.extensions import csrf, db, login_manager
+from app.web import errors
 
 
 def create_app(config: Mapping[str, Any] | None = None) -> Flask:
@@ -30,11 +31,12 @@ def create_app(config: Mapping[str, Any] | None = None) -> Flask:
     # inferred attribute type rejects the documented string assignment.
     login_manager.login_view = "auth.login"  # pyright: ignore[reportAttributeAccessIssue]
     login_manager.login_message = "Accedi per continuare."
-    from app.presentation import italian
+    from app.web.presentation import italian, question_layout
 
     app.jinja_env.filters["italian"] = italian
+    app.jinja_env.filters["question_layout"] = question_layout
 
-    from app.models import User
+    from app.domain.models import User
     from app.repositories.users import UserRepository
 
     @login_manager.user_loader
@@ -45,12 +47,12 @@ def create_app(config: Mapping[str, Any] | None = None) -> Flask:
             else None
         )
 
-    from app.auth.routes import bp as auth
-    from app.leaderboard.routes import bp as leaderboard
-    from app.main.routes import bp as main
-    from app.quiz.routes import bp as quiz
-    from app.weather.routes import bp as weather
-    from app.weather.service import WeatherService
+    from app.routers.auth import bp as auth
+    from app.routers.leaderboard import bp as leaderboard
+    from app.routers.main import bp as main
+    from app.routers.quiz import bp as quiz
+    from app.routers.weather import bp as weather
+    from app.services.weather import WeatherService
 
     app.extensions["weather"] = WeatherService()
     for blueprint in (main, auth, quiz, leaderboard, weather):

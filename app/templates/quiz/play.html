@@ -1,67 +1,119 @@
 {% extends "base.html" %}
-{% block title %}Domanda {{ slot.position + 1 }} — QuizLab{% endblock %}
+{% from "quiz/_trail.html" import trail, question_body %}
+{% block title %}
+  {% if feedback %}{{ 'Esatto!' if slot.awarded_points else 'Quasi!' }}{% endif %}
+  Domanda {{ slot.position + 1 }} di 10 — QuizLab
+{% endblock %}
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/quiz.js') }}" defer></script>
+{% endblock %}
 {% block content %}
-  <div class="container">
-    <div class="page-title">
-      <div class="eyebrow"><span class="dot"></span> MODALITÀ SFIDA</div>
-      <h1>{{ category|italian if category else 'Quiz misto di Python e AI' }}</h1>
-      <p>Scegli una risposta per ogni domanda.</p>
+  {% set layout = slot.snapshot.text|question_layout %}
+  {% set number = slot.position + 1 %}
+  {% set wrong_so_far = answered - score %}
+  <div class="container-narrow play">
+    <div class="play-bar">
+      <a class="back-link" href="{{ url_for('quiz.index') }}">
+        <svg class="icon" aria-hidden="true" focusable="false">
+          <use href="#i-back"></use>
+        </svg>
+        Torna ai quiz
+      </a>
+      <p class="chip">
+        <span class="chip-dot" aria-hidden="true"></span>
+        {{ slot.snapshot.category|italian }} · {{ slot.snapshot.difficulty|italian }}
+      </p>
+      <p class="round-points">
+        <svg class="icon icon-fill" aria-hidden="true" focusable="false">
+          <use href="#i-flame"></use>
+        </svg>
+        {{ score }} {{ 'punto' if score == 1 else 'punti' }}
+        <span class="visually-hidden">in questo round</span>
+      </p>
     </div>
-    <div class="quiz-layout">
-      <section class="quiz-main" aria-label="Domanda attuale">
-        <div class="quiz-top">
-          <div class="progress-wrap">
-            <label class="quiz-progress-text"
-                   for="round-progress">Domanda <strong>{{ slot.position + 1 }}</strong> di 10</label>
-            <progress id="round-progress" max="10" value="{{ answered }}">{{ answered }} di 10 completate</progress>
-          </div>
-          <span class="simple-pill">{{ 'Risposta registrata' if feedback else 'Round in corso' }}</span>
-        </div>
-        <div class="quiz-card">
-          <span class="category-label">{{ slot.snapshot.category|italian }} · {{ slot.snapshot.difficulty|italian }}</span>
-          <h2>Scegli la risposta corretta</h2>
-          <pre class="question-text">{{ slot.snapshot.text }}</pre>
-          <form method="post"
-                action="{{ url_for('quiz.answer', round_id=round.id) }}">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <input type="hidden" name="answer_id" value="{{ slot.id }}">
-            <div class="answers">
-              {% for option in slot.snapshot.options %}
-                <button class="answer{% if feedback and loop.index0 == slot.snapshot.correct_index %} is-correct{% elif feedback and loop.index0 == slot.selected_option %} is-wrong{% endif %}"
-                        type="submit"
-                        name="option"
-                        value="{{ loop.index0 }}"
-                        {% if feedback %}disabled{% endif %}>
-                  <span class="answer-letter" aria-hidden="true">{{ 'ABCD'[loop.index0] }}</span>
-                  <span>{{ option }}</span>
-                  {% if feedback and loop.index0 == slot.snapshot.correct_index %}<span class="answer-state">✓ Corretta</span>{% elif feedback and loop.index0 == slot.selected_option %}<span class="answer-state">✕ La tua risposta</span>{% endif %}
-                </button>
-              {% endfor %}
-            </div>
-          </form>
-          {% if feedback %}
-            <div class="feedback visible" role="status"><strong>{{ '✓ Risposta corretta!' if slot.awarded_points else '✕ Risposta errata.' }}</strong> {{ slot.snapshot.explanation }}</div>
+    {{ trail(round.answers, slot.id) }}
+    <p class="trail-summary">
+      Domanda <strong>{{ number }} di 10</strong>
+      {% if score %}· {{ score }} {{ 'giusta' if score == 1 else 'giuste' }}{% endif %}
+      {% if wrong_so_far %}· {{ wrong_so_far }} da ripassare{% endif %}
+    </p>
+    <section class="question-card" aria-labelledby="question-title">
+      <h1 class="question-title"
+          id="question-title">{{ layout.prompt or 'Leggi il codice e scegli la risposta giusta' }}</h1>
+      {{ question_body(layout) }}
+      {% if feedback %}
+        {% set right_index = slot.snapshot.correct_index %}
+        {% set right_letter = 'ABCD'[right_index] %}
+        <section class="feedback {{ 'feedback-right' if slot.awarded_points else 'feedback-wrong' }}"
+                 aria-labelledby="feedback-title">
+          <span class="feedback-icon" aria-hidden="true">
+            <svg class="icon" focusable="false">
+              <use href="#i-{{ 'check' if slot.awarded_points else 'bulb' }}"></use>
+            </svg>
+          </span>
+          <h2 class="feedback-title" id="feedback-title" tabindex="-1">
+            {{ 'Esatto, risposta giusta!' if slot.awarded_points else 'Quasi! La risposta giusta è la ' ~ right_letter ~ '.' }}
+          </h2>
+          {% if slot.awarded_points %}
+            <p class="feedback-answer">Hai guadagnato 1 punto. Continua così!</p>
+          {% else %}
+            <p class="feedback-answer">
+              <span class="answer-key" aria-hidden="true">{{ right_letter }}</span>
+              <span><span class="visually-hidden">Risposta giusta:</span> {{ slot.snapshot.options[right_index] }}</span>
+            </p>
           {% endif %}
-          <div class="quiz-card-footer">
-            <span class="quiz-hint">{{ 'Leggi la spiegazione prima di continuare.' if feedback else 'Scegli la risposta che ritieni corretta.' }}</span>
-            {% if feedback %}
-              <a class="btn btn-primary"
-                 href="{{ url_for('quiz.results' if round.completed_at else 'quiz.play', round_id=round.id) }}">{{ 'Vedi i risultati' if round.completed_at else 'Prossima domanda' }} →</a>
-            {% endif %}
-          </div>
+          <p class="feedback-why">
+            <strong>Perché?</strong> {{ slot.snapshot.explanation }}
+          </p>
+          <a class="btn btn-primary btn-large feedback-next"
+             href="{{ url_for('quiz.results' if round.completed_at else 'quiz.play', round_id=round.id) }}">
+            {{ 'Vedi i risultati' if round.completed_at else 'Prossima domanda' }}
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use href="#i-arrow"></use>
+            </svg>
+          </a>
+        </section>
+      {% endif %}
+      <form class="answer-form"
+            method="post"
+            action="{{ url_for('quiz.answer', round_id=round.id) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="answer_id" value="{{ slot.id }}">
+        <div class="answers{{ ' is-reviewed' if feedback else '' }}"
+             role="group"
+             aria-label="Risposte">
+          {% for option in slot.snapshot.options %}
+            {% set index = loop.index0 %}
+            {% set is_right = feedback and index == slot.snapshot.correct_index %}
+            {% set is_chosen = feedback and index == slot.selected_option %}
+            <button class="answer{% if is_right %} is-correct{% elif is_chosen %} is-wrong{% elif feedback %} is-muted{% endif %}"
+                    type="submit"
+                    name="option"
+                    value="{{ index }}"
+                    {% if feedback %}disabled{% endif %}>
+              <span class="answer-key">{{ 'ABCD'[index] }}</span>
+              <span class="answer-text">{{ option }}</span>
+              {% if is_right or is_chosen %}
+                <span class="answer-tag">
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-{{ 'check' if is_right else 'x' }}"></use>
+                  </svg>
+                  <span class="answer-tag-label">
+                    {%- if is_right and is_chosen %}
+                      La tua risposta, giusta
+                    {%- elif is_right %}
+                      Risposta giusta
+                    {%- else %}
+                      La tua risposta
+                    {%- endif -%}
+                  </span>
+                </span>
+              {% endif %}
+            </button>
+          {% endfor %}
         </div>
-      </section>
-      <aside aria-label="I tuoi progressi">
-        <div class="side-panel">
-          <h2 class="side-title">Il tuo punteggio</h2>
-          <div class="score-display"><span>QUESTO ROUND</span><strong>{{ score }}<small>/10</small></strong><small>{{ answered }} domande completate</small></div>
-          <div class="side-row"><span>Punti totali</span><strong>{{ current_user.total_score }}</strong></div>
-        </div>
-        <div class="side-panel tip-card">
-          <h2 class="side-title">Un promemoria</h2>
-          <p>Leggi la spiegazione dopo ogni risposta.</p>
-        </div>
-      </aside>
-    </div>
+      </form>
+      {% if not feedback %}<p class="answer-hint">Tocca o clicca la risposta che ti sembra giusta.</p>{% endif %}
+    </section>
   </div>
 {% endblock %}

@@ -5,10 +5,10 @@ from html.parser import HTMLParser
 import pytest
 from sqlalchemy import select
 
-from app.domain import CATEGORY_LABELS
-from app.extensions import db
-from app.models import QuizAnswer, QuizRound, User
-from app.questions import import_static_questions
+from app.core.extensions import db
+from app.domain.constants import CATEGORY_LABELS
+from app.domain.models import QuizAnswer, QuizRound, User
+from app.services.questions import import_static_questions
 from tests.helpers import present
 
 
@@ -19,7 +19,7 @@ class TopicLinks(HTMLParser):
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = dict(attrs)
-        if tag == "a" and "topic-card" in (attributes.get("class") or "").split():
+        if tag == "a" and "topic" in (attributes.get("class") or "").split():
             self.targets.append(attributes["href"])
 
 
@@ -102,7 +102,7 @@ def test_different_category_does_not_silently_resume_or_replace_active_round(
 
 
 def test_category_history_survives_switching_topics(app, category_client):
-    from app.quiz.service import start_round, submit_answer
+    from app.services.quiz import start_round, submit_answer
 
     with app.app_context():
         user_id = present(db.session.scalar(select(User.id)))
@@ -153,15 +153,15 @@ def test_results_keep_the_selected_topic_in_the_summary(app, category_client):
             == 302
         )
     page = category_client.get(f"{url}/results").get_data(as_text=True)
-    assert "Fondamenti di Python · Ecco le risposte" in page
+    assert "Fondamenti di Python: hai guadagnato 10 punti" in page
 
 
 def test_small_category_is_unavailable_in_picker_and_service(app, category_client):
     from sqlalchemy import delete
     from werkzeug.exceptions import Conflict
 
-    from app.models import Question
-    from app.quiz.service import start_round
+    from app.domain.models import Question
+    from app.services.quiz import start_round
 
     with app.app_context():
         db.session.execute(

@@ -1,63 +1,95 @@
 {% extends "base.html" %}
 {% block title %}Classifica — QuizLab{% endblock %}
 {% block content %}
+  {% set first_position = (players.page - 1) * players.per_page %}
+  {% set show_podium = players.page == 1 and players.items|length >= 3 %}
   <div class="container">
-    <section class="leaderboard-hero">
-      <div>
-        <div class="eyebrow"><span class="dot"></span> LA CLASSIFICA GLOBALE</div>
-        <h1>Classifica</h1>
-        <p>I giocatori sono ordinati per punti complessivi.</p>
-      </div>
-      <div class="trophy" aria-hidden="true">🏆</div>
-    </section>
-    {% if players.page == 1 and players.items %}
-      <section class="podium" aria-label="I primi tre giocatori">
+    <div class="page-head">
+      <h1>Classifica</h1>
+      <p>Ogni risposta giusta vale un punto. Più giochi, più impari: ogni round fa crescere il tuo punteggio.</p>
+    </div>
+    {% if show_podium %}
+      <ol class="podium" aria-label="I primi tre giocatori">
         {% for player in players.items[:3] %}
-          <article class="podium-card {{ 'first' if loop.first else '' }}">
-            <span class="rank-medal">#{{ loop.index }}</span>
-            <div class="podium-avatar" aria-hidden="true">{{ player.nickname[0] }}</div>
-            <h2>{{ player.nickname }}</h2>
-            <strong>{{ player.total_score }}</strong> punti
-          </article>
+          <li class="podium-step place-{{ loop.index }}">
+            <span class="rank-badge">{{ loop.index }}°</span>
+            <span class="avatar" aria-hidden="true">{{ player.nickname[0] }}</span>
+            <span class="podium-name">{{ player.nickname }}</span>
+            <span class="podium-score"><strong>{{ player.total_score }}</strong> {{ 'punto' if player.total_score == 1 else 'punti' }}</span>
+          </li>
         {% endfor %}
-      </section>
+      </ol>
     {% endif %}
-    <section class="leaderboard-box" aria-labelledby="ranking-title">
-      <div class="table-bar">
-        <h2 id="ranking-title">Classifica dei giocatori</h2>
-        <span>Punti complessivi · {{ players.total }} giocatori</span>
+    <section class="board" aria-labelledby="ranking-title">
+      <div class="board-head">
+        <h2 id="ranking-title">Tutti i giocatori</h2>
+        <p>{{ players.total }} {{ 'giocatore' if players.total == 1 else 'giocatori' }} · ordinati per punti totali</p>
       </div>
-      <div class="table-scroll">
-        <table class="rank-table">
-          <caption class="visually-hidden">Giocatori ordinati per punti totali; a parità di punti, per nickname.</caption>
-          <thead>
-            <tr>
-              <th scope="col">Posizione</th>
-              <th scope="col">Giocatore</th>
-              <th scope="col">Punti totali</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for player in players.items %}
-              <tr{% if current_user.is_authenticated and player.id == current_user.id %} class="current-row"{% endif %}>
-                <td>#{{ (players.page - 1) * players.per_page + loop.index }}</td>
-                <th scope="row"><span class="person"><span class="small-avatar" aria-hidden="true">{{ player.nickname[0] }}</span>{{ player.nickname }}{% if current_user.is_authenticated and player.id == current_user.id %} (tu){% endif %}</span></th>
-                <td>{{ player.total_score }}</td>
-              </tr>
-            {% else %}
+      {% if players.items %}
+        <div class="table-scroll">
+          <table class="rank-table">
+            <caption class="visually-hidden">Giocatori ordinati per punti totali; a parità di punti, per nickname.</caption>
+            <thead>
               <tr>
-                <td colspan="3">Non ci sono ancora giocatori in classifica.</td>
+                <th scope="col">Posizione</th>
+                <th scope="col">Giocatore</th>
+                <th scope="col">Punti totali</th>
               </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {% for player in players.items %}
+                {% set position = first_position + loop.index %}
+                {% set is_me = current_user.is_authenticated and player.id == current_user.id %}
+                <tr{% if is_me %} class="current-row"{% endif %}>
+                  <td>
+                    <span class="rank-badge{% if position <= 3 %} place-{{ position }}{% endif %}">{{ position }}°</span>
+                  </td>
+                  <th scope="row">
+                    <span class="person"><span class="avatar"
+                                               aria-hidden="true">{{ player.nickname[0] }}</span>{{ player.nickname }}
+                      {% if is_me %}<span class="you-tag">Tu</span>{% endif %}
+                    </span>
+                  </th>
+                  <td>{{ player.total_score }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <h3>La classifica è ancora vuota</h3>
+          <p>Gioca il primo round e apri tu la classifica.</p>
+          <a class="btn btn-primary" href="{{ url_for('quiz.index') }}">Gioca un round</a>
+        </div>
+      {% endif %}
     </section>
-    <nav class="pagination" aria-label="Pagine della classifica">
-      {% if players.has_prev %}<a class="btn btn-outline"
-                                  href="{{ url_for('leaderboard.index', page=players.prev_num) }}">← Precedente</a>{% endif %}
-      {% if players.has_next %}<a class="btn btn-outline"
-                                  href="{{ url_for('leaderboard.index', page=players.next_num) }}">Successiva →</a>{% endif %}
-    </nav>
+    <p class="board-note">
+      <svg class="icon" aria-hidden="true" focusable="false">
+        <use href="#i-sprout"></use>
+      </svg>
+      Le risposte sbagliate non tolgono punti: ogni round è un’occasione per imparare qualcosa di nuovo.
+    </p>
+    {% if players.has_prev or players.has_next %}
+      <nav class="pagination" aria-label="Pagine della classifica">
+        {% if players.has_prev %}
+          <a class="btn btn-secondary"
+             href="{{ url_for('leaderboard.index', page=players.prev_num) }}">
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use href="#i-back"></use>
+            </svg>
+            Precedente
+          </a>
+        {% endif %}
+        {% if players.has_next %}
+          <a class="btn btn-secondary next"
+             href="{{ url_for('leaderboard.index', page=players.next_num) }}">Successiva
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use href="#i-arrow"></use>
+            </svg>
+          </a>
+        {% endif %}
+      </nav>
+    {% endif %}
   </div>
 {% endblock %}

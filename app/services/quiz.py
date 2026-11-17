@@ -6,10 +6,10 @@ from typing import Any, TypedDict
 from sqlalchemy import text
 from werkzeug.exceptions import BadRequest, Conflict, NotFound
 
-from app.domain import CATEGORY_LABELS, OPTION_COUNT, ROUND_LENGTH
-from app.extensions import db
-from app.models import AnswerSnapshot, QuizAnswer, QuizRound, utc_now
-from app.quiz.draw_state import read_state, take_questions, write_state
+from app.core.extensions import db
+from app.domain.constants import CATEGORY_LABELS, OPTION_COUNT, ROUND_LENGTH
+from app.domain.draw_state import read_state, take_questions, write_state
+from app.domain.models import AnswerSnapshot, QuizAnswer, QuizRound, utc_now
 from app.repositories.questions import QuestionRepository
 from app.repositories.rounds import RoundRepository
 from app.repositories.users import UserRepository
