@@ -26,7 +26,77 @@
              href="{{ url_for('leaderboard.index') }}">Scopri la classifica</a>
         </div>
       </div>
-      <div class="hero-art">{% include "partials/trail_art.html" %}</div>
+      <section class="weather-card" id="meteo" aria-labelledby="weather-title">
+        <h2 class="visually-hidden" id="weather-title">Meteo</h2>
+        {% if forecast %}
+          <div class="weather-now">
+            <div class="weather-icon" aria-hidden="true">{{ forecast.days[0].icon }}</div>
+            <div>
+              <h3 class="weather-city">{{ forecast.city }}</h3>
+              <p class="weather-temp">
+                <strong>{{ forecast.days[0].maximum|round|int }} °C</strong> massima diurna · {{ forecast.days[0].condition|italian }}
+              </p>
+            </div>
+          </div>
+          <div class="forecast-scroll"
+               role="region"
+               aria-label="Previsioni meteo"
+               tabindex="0">
+            <table class="forecast-table">
+              <caption>Previsioni per oggi, domani e dopodomani. Giorno: 06–18; notte: 18–06 del giorno successivo, ora locale.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Giorno e data</th>
+                  <th scope="col">Condizioni</th>
+                  <th scope="col">Massima diurna</th>
+                  <th scope="col">Minima notturna</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for day in forecast.days %}
+                  <tr>
+                    <th scope="row">
+                      {{ ['Oggi', 'Domani', 'Dopodomani'][loop.index0] }} · {{ day.name }}
+                      <br>
+                      <time datetime="{{ day.date }}">{{ day.display_date }}</time>
+                    </th>
+                    <td>
+                      <span aria-hidden="true">{{ day.icon }}</span> {{ day.condition|italian }}
+                    </td>
+                    <td>{{ day.maximum }} °C</td>
+                    <td>{{ day.minimum }} °C</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <p class="weather-lead">Cerca una città e scopri le previsioni per oggi, domani e dopodomani.</p>
+        {% endif %}
+        <form class="inline-form"
+              method="get"
+              action="{{ url_for('weather.search') }}#meteo">
+          <div class="form-field">
+            <label for="city">Nome della città</label>
+            <input id="city"
+                   name="city"
+                   value="{{ city }}"
+                   placeholder="Es. Roma"
+                   autocomplete="address-level2"
+                   minlength="2"
+                   maxlength="80"
+                   required
+                   {% if weather_error %}aria-describedby="weather-error" aria-invalid="true"{% endif %}>
+          </div>
+          <button class="btn btn-secondary" type="submit">Cerca</button>
+        </form>
+        {% if weather_error %}
+          <p class="form-error" id="weather-error" role="alert">{{ weather_error|italian }}</p>
+        {% endif %}
+        <p class="weather-credit">
+          Meteo di <a href="https://open-meteo.com/">Open-Meteo</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+        </p>
+      </section>
     </section>
     <ol class="steps" aria-label="Come funziona">
       <li class="step">
@@ -72,82 +142,6 @@
             </span>
           </a>
         {% endfor %}
-      </div>
-    </section>
-    <section class="home-section weather"
-             id="meteo"
-             aria-labelledby="weather-title">
-      <div class="weather-intro">
-        <h2 class="section-title" id="weather-title">Una pausa dallo studio?</h2>
-        <p>Cerca una città e scopri le previsioni per oggi, domani e dopodomani.</p>
-      </div>
-      <div class="weather-card">
-        {% if forecast %}
-          <div class="weather-now">
-            <div class="weather-icon" aria-hidden="true">{{ forecast.days[0].icon }}</div>
-            <div>
-              <h3 class="weather-city">{{ forecast.city }}</h3>
-              <p class="weather-temp">
-                <strong>{{ forecast.days[0].maximum|round|int }} °C</strong> massima diurna · {{ forecast.days[0].condition|italian }}
-              </p>
-            </div>
-          </div>
-          <div class="forecast-scroll"
-               role="region"
-               aria-label="Previsioni meteo"
-               tabindex="0">
-            <table class="forecast-table">
-              <caption>Previsioni per oggi, domani e dopodomani. Giorno: 06–18; notte: 18–06 del giorno successivo, ora locale.</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Giorno e data</th>
-                  <th scope="col">Condizioni</th>
-                  <th scope="col">Massima diurna</th>
-                  <th scope="col">Minima notturna</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for day in forecast.days %}
-                  <tr>
-                    <th scope="row">
-                      {{ ['Oggi', 'Domani', 'Dopodomani'][loop.index0] }} · {{ day.name }}
-                      <br>
-                      <time datetime="{{ day.date }}">{{ day.display_date }}</time>
-                    </th>
-                    <td>
-                      <span aria-hidden="true">{{ day.icon }}</span> {{ day.condition|italian }}
-                    </td>
-                    <td>{{ day.maximum }} °C</td>
-                    <td>{{ day.minimum }} °C</td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        {% endif %}
-        <form class="inline-form"
-              method="get"
-              action="{{ url_for('weather.search') }}#meteo">
-          <div class="form-field">
-            <label for="city">Nome della città</label>
-            <input id="city"
-                   name="city"
-                   value="{{ city }}"
-                   placeholder="Es. Roma"
-                   autocomplete="address-level2"
-                   minlength="2"
-                   maxlength="80"
-                   required
-                   {% if weather_error %}aria-describedby="weather-error" aria-invalid="true"{% endif %}>
-          </div>
-          <button class="btn btn-secondary" type="submit">Cerca</button>
-        </form>
-        {% if weather_error %}
-          <p class="form-error" id="weather-error" role="alert">{{ weather_error|italian }}</p>
-        {% endif %}
-        <p class="weather-credit">
-          Meteo di <a href="https://open-meteo.com/">Open-Meteo</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
-        </p>
       </div>
     </section>
   </div>

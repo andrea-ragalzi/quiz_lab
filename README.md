@@ -9,6 +9,33 @@ can review their answers and explanations afterwards. Scores and unfinished
 rounds are saved. The home page also offers a three-day city forecast from
 [Open-Meteo](https://open-meteo.com/).
 
+## Screenshots
+
+The screenshots below use demo players on a temporary database.
+
+**Home page** with the category overview and the three-day forecast:
+
+![QuizLab home page with categories and the Rome forecast](docs/screenshots/home.png)
+
+**Category choice** before starting a round, and **answer feedback** with the
+explanation shown after each question:
+
+| Choose a quiz | Answer feedback |
+| --- | --- |
+| ![Quiz category selection](docs/screenshots/quiz-categories.png) | ![Feedback after a wrong answer, with the correct option and its explanation](docs/screenshots/quiz-feedback.png) |
+
+**Round results** with answers to review, and the **leaderboard**:
+
+| Round results | Leaderboard |
+| --- | --- |
+| ![Round results with a 7/10 score and the questions to review](docs/screenshots/quiz-results.png) | ![Leaderboard with podium and full player ranking](docs/screenshots/leaderboard.png) |
+
+**Mobile layout** (390 px wide):
+
+| Question | Feedback |
+| --- | --- |
+| <img src="docs/screenshots/mobile-question.png" alt="Quiz question on a phone" width="300"> | <img src="docs/screenshots/mobile-feedback.png" alt="Correct-answer feedback on a phone" width="300"> |
+
 ## Local installation
 
 Python 3.11 or later is required. Internet access is needed to install the
@@ -228,3 +255,4 @@ SQLite is intended for modest usage.
 - `app/domain/` contains quiz constants, models and question-draw state.
 - `app/core/` contains configuration, extensions, security and CLI registration.
 - `app/web/` contains forms, authentication helpers, error handling and presentation labels.
+- `docs/screenshots/` contains the screenshots shown in this README.

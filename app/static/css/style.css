@@ -1288,7 +1288,7 @@ pre {
     display: grid;
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
     gap: 48px;
-    align-items: center;
+    align-items: start;
     padding-block: 56px 32px;
 }
 
@@ -1310,19 +1310,6 @@ pre {
     flex-wrap: wrap;
     gap: 12px;
     margin-top: 28px;
-}
-
-.hero-art {
-    padding: 18px;
-    border-radius: var(--radius-xl);
-    background: var(--paper);
-    box-shadow: var(--shadow-lift);
-}
-
-.hero-art svg {
-    width: 100%;
-    height: auto;
-    border-radius: var(--radius-lg);
 }
 
 .steps {
@@ -1457,29 +1444,17 @@ pre {
     color: var(--honey);
 }
 
-/* Weather break */
-.weather {
-    display: grid;
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-    gap: 32px;
-    align-items: start;
-    padding: 32px;
+/* Weather widget (hero, top right) */
+.weather-card {
+    padding: 24px;
     border-radius: var(--radius-xl);
-    background: var(--warm-white);
-    border: 1px solid var(--line);
+    background: var(--paper);
+    box-shadow: var(--shadow-lift);
     scroll-margin-top: 16px;
 }
 
-.weather-intro p {
-    margin-top: 8px;
+.weather-lead {
     color: var(--ink-soft);
-}
-
-.weather-card {
-    padding: 22px;
-    border-radius: var(--radius-lg);
-    background: var(--paper);
-    box-shadow: var(--shadow-card);
 }
 
 .weather-now {
@@ -2020,8 +1995,7 @@ pre {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .picker-layout,
-    .weather {
+    .picker-layout {
         grid-template-columns: 1fr;
     }
 
@@ -2213,18 +2187,13 @@ pre {
     }
 
     .hero {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: 28px;
         padding-top: 32px;
     }
 
     .hero-actions .btn {
         flex: 1 1 100%;
-    }
-
-    .hero-art {
-        padding: 10px;
-        border-radius: var(--radius-lg);
     }
 
     .steps {
@@ -2268,13 +2237,9 @@ pre {
         display: none;
     }
 
-    .weather {
-        padding: 20px 16px;
-        border-radius: var(--radius-lg);
-    }
-
     .weather-card {
         padding: 16px;
+        border-radius: var(--radius-lg);
     }
 
     .inline-form {
